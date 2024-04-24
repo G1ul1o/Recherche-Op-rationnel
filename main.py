@@ -1,5 +1,5 @@
 from lecture_fichier import *
-from Nord_Ouest import *
+from fonction_général import *
 
 
 if __name__ == '__main__':
@@ -16,18 +16,16 @@ if __name__ == '__main__':
 
         print("La matrice est :")
 
-        for i in range (nbr_P+1):
-            for j in range (nbr_C+1):
-                print(matrice[i][j], end=" ")
-            print()
+    def afficher_matrices():
 
-    def Methode_NO():
-        global matrice_NO
-        matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
+        affichage_couts(matrice,nbr_C,nbr_P)
 
-        print("La matrice avec la méthode de Nord-Ouest est :")
-        for row in matrice_NO:
-            print(row)
+    def afficher_proposition_de_transport():
+
+        affichage_proposition_de_transport(matrice,matrice,nbr_C,nbr_P)
+
+
+
 
 
 
@@ -35,7 +33,7 @@ if __name__ == '__main__':
 
         if choix == 1:
             lire_fichier()
-            Methode_NO()
+            afficher_matrices()
 
 
         if continuer == True:
