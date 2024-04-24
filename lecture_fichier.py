@@ -29,8 +29,6 @@ def lecture_fichier(fichier):
 
                 #On rempli la matrice des prix unitaires + provision
                 for i in range (nbr_C+1):
-                    print(indice)
-                    print(data[i])
                     matrice[indice][i]= data[i]
                 indice+=1
 
