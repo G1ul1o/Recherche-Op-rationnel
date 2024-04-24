@@ -1,4 +1,5 @@
 from lecture_fichier import *
+from fonction_général import *
 
 
 if __name__ == '__main__':
@@ -15,10 +16,16 @@ if __name__ == '__main__':
 
         print("La matrice est :")
 
-        for i in range (nbr_P+1):
-            for j in range (nbr_C+1):
-                print(matrice[i][j], end=" ")
-            print()
+    def afficher_matrices():
+
+        affichage_couts(matrice,nbr_C,nbr_P)
+
+    def afficher_proposition_de_transport():
+
+        affichage_proposition_de_transport(matrice,matrice,nbr_C,nbr_P)
+
+
+
 
 
 
@@ -26,6 +33,8 @@ if __name__ == '__main__':
 
         if choix == 1:
             lire_fichier()
+            afficher_matrices()
+
 
         if continuer == True:
             choix = int(input(  "Que souhaitez-vous faire ?\n"
