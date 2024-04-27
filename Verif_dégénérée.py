@@ -39,7 +39,8 @@ def recherche_indice (graph,sommet_a_trouver):
 def verif_cycle (graph):
 
     sommet_parcouru = []
-
+    verif=True
+    cycle=[]
 
     #On récupère C1
     index = recherche_indice(graph,"C1")
@@ -118,34 +119,156 @@ def recherche_cycle (sommet,sommet_parent,cycle,graph,sommet_départ,chemin_parc
             index = recherche_indice(graph,liaison)
             recherche_cycle(graph[index], sommet.nom_sommet, cycle,graph,sommet_départ,stockage_chemin_intermediaire)
     return
-def Maximisation (graph,cycle):
-    print()
+def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P):
+
+    indices_P = []
+    indices_C = []
+
+    #extraction des données indice 0 lettre et indice 1 chiffre :
+    indice_ligne_ajouter = int(ligne_ajouter[0][1])-1
+    indice_colonne_ajouter = int(ligne_ajouter[1][1])-1
+
+    composition_cycle = []
+    if cycle[0][0]=="C":
+        for i in range (len(cycle)):
+            ligne = cycle[i]
+
+            if ligne[0]=="P":
+                case_cycle = []
+                case_cycle.append(int(ligne[1])-1)
+                case_cycle.append(int(cycle[i-1][1])-1)
+                composition_cycle.append(case_cycle)
+
+                case_cycle = []
+                case_cycle.append(int(ligne[1])-1)
+                case_cycle.append(int(cycle[i +1][1])-1)
+                composition_cycle.append(case_cycle)
+    else :
+        for i in range(len(cycle)):
+            colonne = cycle[i]
+            if colonne[0] == "C":
+                case_cycle = []
+                case_cycle.append(int(cycle[i - 1][1]) - 1)
+                case_cycle.append(int(colonne[1]) - 1)
+                composition_cycle.append(case_cycle)
+
+                case_cycle = []
+                case_cycle.append(int(cycle[i + 1][1]) - 1)
+                case_cycle.append(int(colonne[1]) - 1)
+                composition_cycle.append(case_cycle)
 
 
-proposition_de_transport1 = [[5,5,0,0],[0,30,2,3],[0,0,10,10]]
-proposition_de_transport2 = [[0,2000,3000,0],[0,1000,2000,3000],[5000,0,0,1000]]
+
+
+
+    for case_cycle in composition_cycle:
+        if case_cycle[0] == indice_ligne_ajouter and case_cycle[1]!= indice_colonne_ajouter:
+            a_compenser = propositon_de_transport[indice_ligne_ajouter][case_cycle[1]]
+            propositon_de_transport[indice_ligne_ajouter][case_cycle[1]] = 0
+
+
+
+
+    propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter] = a_compenser
+
+    for case_cycle in composition_cycle:
+        if case_cycle[1] == indice_colonne_ajouter and case_cycle[0]!=indice_ligne_ajouter:
+            propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] -= a_compenser
+
+
+    ligne = False
+    colonne = False
+    while ligne!=True and colonne!=True:
+        ligne = True
+        colonne = True
+        for i in range (nbr_P):
+
+            provision = 0
+
+            #valeur absolue
+            a_compenser = abs(a_compenser)
+            for j in range (nbr_C):
+                 provision += propositon_de_transport[i][j]
+            if provision != propositon_de_transport[i][nbr_C]:
+                if provision > propositon_de_transport[i][nbr_C]:
+                    a_compenser= (-a_compenser)
+                ajustement_proposition_ligne(propositon_de_transport,i,indice_ligne_ajouter,indice_colonne_ajouter,a_compenser,composition_cycle)
+                ligne = False
+
+
+        for indice_colonne in range(nbr_C):
+
+            provision = 0
+
+            # valeur absolue
+            a_compenser = abs(a_compenser)
+            for j in range(nbr_P):
+                provision += propositon_de_transport[j][indice_colonne]
+            if provision != propositon_de_transport[nbr_P][indice_colonne]:
+                if provision > propositon_de_transport[nbr_P][indice_colonne]:
+                    a_compenser = (-a_compenser)
+                ajustement_proposition_colonne(propositon_de_transport, indice_colonne, indice_ligne_ajouter, indice_colonne_ajouter,
+                                             a_compenser, composition_cycle)
+                colonne=False
+
+
+def ajustement_proposition_ligne(propositon_de_transport,ligne_a_modifier,indice_ligne_ajouter,indice_colonne_ajouter,a_ajouter,composition_cycle):
+
+   for cycle in composition_cycle:
+
+       if cycle[1] != indice_colonne_ajouter :
+           #on exclu la case que nous avons ajouter et on garde la ligne qu'on veut modifier
+           if cycle[0] != indice_ligne_ajouter and cycle[0]==ligne_a_modifier:
+
+                propositon_de_transport[cycle[0]][cycle[1]] += a_ajouter
+
+
+def ajustement_proposition_colonne (propositon_de_transport,colonne_a_modifer,indice_ligne_ajouter,indice_colonne_ajouter,a_ajouter,composition_cycle):
+    for cycle in composition_cycle:
+
+        if cycle[0] != indice_ligne_ajouter:
+            # on exclu la case que nous avons ajouter et on garde la colonne qu'on veut modifier
+            if cycle[1] != indice_colonne_ajouter and cycle[1] == colonne_a_modifer:
+
+                propositon_de_transport[cycle[0]][cycle[1]] += a_ajouter
+
+
+proposition_de_transport1 = [[5,5,30,25,60],[0,30,0,0,30],[45,45,0,0,90],[50,75,30,25,180]]
+proposition_de_transport2 = [[35,0,0,25,60],[0,4,30,0,30],[15,75,0,0,90],[50,75,30,25,180]]
 nbr_C = 4
-nbr_S = 3
+nbr_P = 3
 
-graph1 = creation_graphe(proposition_de_transport1,nbr_C,nbr_S)
-graph2 = creation_graphe(proposition_de_transport2,nbr_C,nbr_S)
+graph1 = creation_graphe(proposition_de_transport1,nbr_C,nbr_P)
+graph2 = creation_graphe(proposition_de_transport2,nbr_C,nbr_P)
 
 for i in range(len(graph1)):
     print(graph1[i].nom_sommet ,",", graph1[i].liaison)
     if graph1[i].nom_sommet=="C1":
         liaison = graph1[i].liaison
 
-verif = verif_cycle(graph1)
+verif,cycle = verif_cycle(graph1)
 
 print(verif)
-'''
+print(cycle)
+
+Maximisation(graph1,cycle,proposition_de_transport1,["P1","C2"],nbr_C,nbr_P)
+
+print(proposition_de_transport1)
+print("fini")
+
 for i in range(len(graph2)):
     print(graph2[i].nom_sommet ,",", graph2[i].liaison)
-    if graph2[i].nom_sommet=="C1":
-        liaison = graph2[i].liaison
+    if graph2[i].nom_sommet=="C3":
+        graph2[i].liaison.append("P1")
 
-verif = verif_cycle(graph2)
+verif,cycle = verif_cycle(graph2)
+print(verif)
+print(cycle)
 
-print (verif)'''
+if verif == False :
+    Maximisation(graph2,cycle,proposition_de_transport2,["P2","C2"],nbr_C,nbr_P)
+
+print(proposition_de_transport2)
+print("fini")
 
 
