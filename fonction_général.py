@@ -1,51 +1,65 @@
 import pandas as lecture #bibliothèque de DataFrame
+from tabulate import tabulate
 def affichage_couts(matrice,nbr_C, nbr_P):
-    nom_C= []
-    nom_P = []
+    data = []
 
-    # On crée les légendes des tableaux (C)
-    for i in range(nbr_C):
-        nom_C.append("C"+str(i+1))
-
-    # on ajoute toutes les nom d'état dans une seul liste (P)
     for i in range(nbr_P):
-        nom_P.append("P"+str(i+1))
+        ligne = []
+        ligne.append("P" + str(i + 1))
 
-    L2 = []
-    for i in range(nbr_P):
-        L=[]
         for j in range(nbr_C):
-            L.append(matrice[i][j])
-        L2.append(L)
 
-    df = lecture.DataFrame(L2,index=nom_C,columns=nom_P)
-    print(df)
+            ligne.append(matrice[i][j])
+        ligne.append(matrice[i][nbr_C])
+        data.append(ligne)
+
+    # Ligne des provisions
+    ligne = []
+    ligne.append("Provision")
+    for j in range(nbr_C):
+        ligne.append(matrice[nbr_P][j])
+    data.append(ligne)
+
+    headers = [" "]
+
+    for i in range(nbr_C):
+        headers.append("C" + str(i + 1))
+    headers.append("Commande")
+
+    print(tabulate(data, headers=headers, tablefmt="mixed_outline", numalign="right"))
 
 def affichage_proposition_de_transport(matrice,matrice_avec_nbr_de_commande,nbr_C, nbr_P):
 
-    nom_C = []
-    nom_P = []
+    data = []
 
-    # On crée les légendes des tableaux (C)
-    for i in range(nbr_C):
-        nom_C.append("C" + str(i + 1))
-
-    # on ajoute toutes les nom d'état dans une seul liste (P)
     for i in range(nbr_P):
-        nom_P.append("P" + str(i + 1))
+        ligne = []
+        ligne.append("P"+str(i+1))
 
-    L2 = []
-    for i in range(nbr_P):
-        L = []
-        for j in range(nbr_C):
-            L3=[]
+        for j in range (nbr_C):
+            valeurs = []
 
-            L3.append(matrice[i][j])
-            L3.append(matrice_avec_nbr_de_commande[i][j])
-            L.append(L3)
+            valeurs.append(matrice[i][j])
+            valeurs.append(matrice_avec_nbr_de_commande[i][j])
 
-        L2.append(L)
+            ligne.append(valeurs)
+        ligne.append(matrice[i][nbr_C])
+        data.append(ligne)
 
-    df = lecture.DataFrame(L2, index=nom_C, columns=nom_P)
-    print(df)
+
+    #Ligne des provisions
+    ligne = []
+    ligne.append("Provision")
+    for j in range (nbr_C):
+        ligne.append(matrice[nbr_P][j])
+    data.append(ligne)
+
+    headers = [" "]
+
+    for i in range (nbr_C):
+        headers.append("C"+str(i+1))
+    headers.append("Commande")
+
+    print(tabulate(data,headers=headers,tablefmt="mixed_outline",numalign="right"))
+
 
