@@ -1,6 +1,7 @@
 from lecture_fichier import *
 from fonction_général import *
 from Nord_Ouest import *
+from Verif_dégénérée import *
 
 
 if __name__ == '__main__':
@@ -14,8 +15,6 @@ if __name__ == '__main__':
         fichier = input("Entrez le numéro du fichier que vous voulez tester:")
 
         nbr_C, nbr_P, matrice = lecture_fichier(fichier)
-
-        print("La matrice est :")
 
     def afficher_matrices():
 
@@ -31,10 +30,18 @@ if __name__ == '__main__':
         matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
 
         print("La matrice avec la méthode de Nord-Ouest est :")
-        for row in matrice_NO:
-            print(row)
+
+        affichage_proposition_de_transport(matrice,matrice_NO,nbr_C,nbr_P)
+
+    def verif_degeneree():
+        global gaph
+        graph = creation_graphe(matrice_NO,nbr_C,nbr_P)
+        for i in range(len(graph)):
+            print(graph[i].nom_sommet, ",", graph[i].liaison)
 
 
+        verif = verif_cycle(graph)
+        print(verif)
 
 
 
@@ -45,6 +52,7 @@ if __name__ == '__main__':
             lire_fichier()
             afficher_matrices()
             Methode_NO()
+            verif_degeneree()
 
 
         if continuer == True:
