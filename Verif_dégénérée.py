@@ -376,7 +376,7 @@ print(sous_graphes_connexes_test_connexes_2)
 graphe_connexe(sous_graphes_connexes_test_connexes_2,proposition_de_transport_test_connexe2,graph_test_connexe2)
 
 for i in range(len(graph_test_connexe2)):
-    print(graph_test_connexe2[i].nom_sommet ,",", graph_test_connexe2[i].liaison)
+    print(graph_test_connexe2[i].nom_sommet,",", graph_test_connexe2[i].liaison)
 
 verif_test_connexe_2 = detection_de_connexe(graph_test_connexe2,nbr_sommet_graphe_test_connexe_2)
 
