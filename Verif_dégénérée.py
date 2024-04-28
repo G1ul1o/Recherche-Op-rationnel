@@ -157,24 +157,16 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
                 case_cycle.append(int(colonne[1]) - 1)
                 composition_cycle.append(case_cycle)
 
-
-
-
-
     for case_cycle in composition_cycle:
         if case_cycle[0] == indice_ligne_ajouter and case_cycle[1]!= indice_colonne_ajouter:
             a_compenser = propositon_de_transport[indice_ligne_ajouter][case_cycle[1]]
             propositon_de_transport[indice_ligne_ajouter][case_cycle[1]] = 0
-
-
-
 
     propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter] = a_compenser
 
     for case_cycle in composition_cycle:
         if case_cycle[1] == indice_colonne_ajouter and case_cycle[0]!=indice_ligne_ajouter:
             propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] -= a_compenser
-
 
     ligne = False
     colonne = False
@@ -232,8 +224,78 @@ def ajustement_proposition_colonne (propositon_de_transport,colonne_a_modifer,in
 
                 propositon_de_transport[cycle[0]][cycle[1]] += a_ajouter
 
+def detection_de_connexe(graph,nbr_sommet):
+    sommet_parcouru = []
+    verif = True
+    nbr_arrete_parcouru=0
 
-proposition_de_transport1 = [[5,5,30,25,60],[0,30,0,0,30],[45,45,0,0,90],[50,75,30,25,180]]
+    # On récupère C1
+    index = recherche_indice(graph, "C1")
+    C1 = graph[index]
+    sommet_parcouru.append("C1")
+
+    # On passe dans les successeurs de C1
+    for liaison in C1.liaison:
+        sommet_parcouru.append(liaison)
+        nbr_arrete_parcouru+=1
+        index = recherche_indice(graph, liaison)
+
+        nbr_arrete_parcouru= detection_de_connexe_recursif(graph,graph[index],nbr_arrete_parcouru, sommet_parcouru)
+
+    if nbr_arrete_parcouru != nbr_sommet - 1:
+        verif=False
+        print("ce graphe n'est pas connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+    else:
+        print("ce graphe est connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+
+    return verif
+def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcouru):
+    for liaison in sommet.liaison:
+            if liaison not in sommet_parcouru:
+
+                index = recherche_indice(graph, liaison)
+                sommet_parcouru.append(liaison)
+                nbr_sommet_parcouru+=1
+
+                nbr_sommet_parcouru = detection_de_connexe_recursif(graph,graph[index],nbr_sommet_parcouru, sommet_parcouru)
+
+
+    # Nous sommes arrivés à un sommet qui n'a pas d'autres successeur que son parent
+    return nbr_sommet_parcouru
+
+def recherche_des_sous_graphes_connexes(graph,nbr_P):
+    #matrice contenant tout les chemins de sous_graphes_connexes
+    sous_graphes_connexes = []
+    chemin_parcouru = []
+    for indice_ligne in range(nbr_P):
+        verif_sous_graphes_présence = False
+        nom_sommet_P = ("P"+str(indice_ligne+1))
+        for indice_sous_graphes_connexes in range (len(sous_graphes_connexes)):
+            if (nom_sommet_P in sous_graphes_connexes[indice_sous_graphes_connexes]):
+                verif_sous_graphes_présence = True
+        #si le sommet n'est pas présent on continue sinon on ne le commence pas
+
+        if verif_sous_graphes_présence == False:
+            index=recherche_indice(graph,nom_sommet_P)
+            recherche_des_sous_graphes_connexes_recursif(graph[index],chemin_parcouru,graph)
+            sous_graphes_connexes.append(chemin_parcouru)
+            chemin_parcouru=[]
+
+    print("sous_graphes_connexes",sous_graphes_connexes)
+    return sous_graphes_connexes
+
+def recherche_des_sous_graphes_connexes_recursif(sommet,chemin_parcouru,graph):
+    chemin_parcouru.append(sommet.nom_sommet)
+
+    for liaison in sommet.liaison:
+        if liaison not in chemin_parcouru:
+            index = recherche_indice(graph,liaison)
+            recherche_des_sous_graphes_connexes_recursif(graph[index],chemin_parcouru,graph)
+
+def graphe_connexe ():
+    print()
+
+proposition_de_transport1 = [[35,0,0,25,60],[0,0,30,0,30],[15,75,0,0,90],[50,75,30,25,180]]
 proposition_de_transport2 = [[35,0,0,25,60],[0,4,30,0,30],[15,75,0,0,90],[50,75,30,25,180]]
 nbr_C = 4
 nbr_P = 3
@@ -246,7 +308,16 @@ for i in range(len(graph1)):
     if graph1[i].nom_sommet=="C1":
         liaison = graph1[i].liaison
 
-verif,cycle = verif_cycle(graph1)
+nbr_sommet=nbr_C+nbr_P
+verif = detection_de_connexe(graph1,nbr_sommet)
+
+if verif == False:
+    sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph1,nbr_P)
+
+print(sous_graphes_connexes)
+
+
+'''verif,cycle = verif_cycle(graph1)
 
 print(verif)
 print(cycle)
@@ -269,6 +340,6 @@ if verif == False :
     Maximisation(graph2,cycle,proposition_de_transport2,["P2","C2"],nbr_C,nbr_P)
 
 print(proposition_de_transport2)
-print("fini")
+print("fini")'''
 
 
