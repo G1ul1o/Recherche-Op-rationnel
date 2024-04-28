@@ -362,7 +362,7 @@ for i in range(len(graph1)):
 
 verif = detection_de_connexe(graph1,nbr_sommet)'''
 
-for i in range(len(graph_test_connexe2)):
+'''for i in range(len(graph_test_connexe2)):
     print(graph_test_connexe2[i].nom_sommet ,",", graph_test_connexe2[i].liaison)
 
 nbr_sommet_graphe_test_connexe_2 = nbr_C2+nbr_P2
@@ -378,5 +378,21 @@ graphe_connexe(sous_graphes_connexes_test_connexes_2,proposition_de_transport_te
 for i in range(len(graph_test_connexe2)):
     print(graph_test_connexe2[i].nom_sommet,",", graph_test_connexe2[i].liaison)
 
-verif_test_connexe_2 = detection_de_connexe(graph_test_connexe2,nbr_sommet_graphe_test_connexe_2)
+verif_test_connexe_2 = detection_de_connexe(graph_test_connexe2,nbr_sommet_graphe_test_connexe_2)'''
 
+
+'''for i in range(len(graph1)):
+    print(graph1[i].nom_sommet ,",", graph1[i].liaison)	    print(graph1[i].nom_sommet ,",", graph1[i].liaison)
+    if graph1[i].nom_sommet=="C1":	    if graph1[i].nom_sommet=="C1":
+        liaison = graph1[i].liaison	        liaison = graph1[i].liaison
+
+
+verif = verif_cycle(graph1)	verif,cycle = verif_cycle(graph1)
+
+
+print(verif)	print(verif)	print(cycle)
+
+Maximisation(graph1,cycle,proposition_de_transport1,["P1","C2"],nbr_C,nbr_P)
+
+print(proposition_de_transport1)
+print("fini")'''
