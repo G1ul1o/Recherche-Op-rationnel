@@ -1,5 +1,5 @@
 from lecture_fichier import lecture_fichier
-
+from main import *
 
 def calcul_penalites(matrice, nbr_P, nbr_C,ligne_banni,colonne_banni):
     penalites_lignes = []
@@ -18,7 +18,6 @@ def calcul_penalites(matrice, nbr_P, nbr_C,ligne_banni,colonne_banni):
             penalites_colonnes.append(penalite_colonne)
         else :
             penalites_colonnes.append(-1)
-    print(penalites_colonnes,'e')
     return penalites_lignes, penalites_colonnes
 
 
@@ -65,19 +64,15 @@ def choisir_case(matrice, indices_max_ligne, indices_max_colonne, provisions, co
                         else:
                             direction = 'colonne'
                         case_choisie_colonne = {'ligne': i, 'colonne': j, 'cout': cout_actuel, 'quantite': min(provisions[i], commandes[j]), 'direction': direction}
-                        print(case_choisie_colonne)
 
             if case_choisie_colonne:
                 candidats.append(case_choisie_colonne)
-                print(case_choisie_colonne)
                 case_choisie_colonne = None
     # Comparer les candidats pour trouver celui qui permet de transporter la quantité maximale
     meilleur_choix = None
     quantite_maximale = 0
     for candidat in candidats:
-        print(candidat,'election')
         if candidat['quantite'] > quantite_maximale:
-            print('condition validé')
             meilleur_choix = candidat
             quantite_maximale = candidat['quantite']
 
@@ -105,7 +100,7 @@ def remplir_matrice_transport(matrice, provisions, commandes):
 
 
     end = False
-    while end == False:  # Tant qu'il reste des provisions et des demandes
+    while end == False:
         end = True
         for i in range(nbr_P):
             for j in range(nbr_C):
@@ -115,10 +110,7 @@ def remplir_matrice_transport(matrice, provisions, commandes):
         if end == False :
             penalites_lignes, penalites_colonnes = calcul_penalites(copie, nbr_P, nbr_C,ligne_banni,colonne_banni)
             indices_max_ligne, indices_max_colonne = trouver_penalite_maximale(penalites_lignes, penalites_colonnes)
-            print("test")
             meilleur_choix = choisir_case(matrice, indices_max_ligne, indices_max_colonne, fixe_provisions, fixe_commandes, ligne_banni, colonne_banni)
-            print(meilleur_choix)
-            print("terminer")
             matrice_transport[meilleur_choix['ligne']][meilleur_choix['colonne']] = meilleur_choix['quantite']
             if meilleur_choix['direction'] == 'ligne':
                 somme = 0
@@ -143,10 +135,11 @@ def remplir_matrice_transport(matrice, provisions, commandes):
                     colonne_banni.append(meilleur_choix['colonne'])
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
-            print(provisions,"p")
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
-            print(commandes,"c")
+            for i in range (len(matrice_transport)):
+                print(matrice_transport[i])
+            print('\n')
 
-            print(matrice_transport)
-            print('tester')
+
     return matrice_transport
+
