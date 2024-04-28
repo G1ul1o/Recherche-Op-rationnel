@@ -1,6 +1,5 @@
 from lecture_fichier import lecture_fichier
 from main import *
-
 def calcul_penalites(matrice, nbr_P, nbr_C,ligne_banni,colonne_banni):
     penalites_lignes = []
     penalites_colonnes = []
@@ -88,8 +87,8 @@ def remplir_matrice_transport(matrice, provisions, commandes):
         fixe_provisions.append(provisions[j])
     nbr_P = len(provisions)
     nbr_C = len(commandes)
-    ligne_banni = []
-    colonne_banni = []
+    ligne_banni =[]
+    colonne_banni =[]
     matrice_transport = [[-1] * nbr_C for i in range(nbr_P)]
     copie = []
     for i in range(len(matrice)):
@@ -136,6 +135,10 @@ def remplir_matrice_transport(matrice, provisions, commandes):
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
+            print("Pénalités des lignes:", penalites_lignes)
+            print("Pénalités des colonnes:", penalites_colonnes)
+            print("Meilleur choix : Ligne", meilleur_choix['ligne'], "Colonne", meilleur_choix['colonne'],
+                  "avec un coût de", meilleur_choix['cout'], "et une quantité maximale de", meilleur_choix['quantite'])
             for i in range (len(matrice_transport)):
                 print(matrice_transport[i])
             print('\n')

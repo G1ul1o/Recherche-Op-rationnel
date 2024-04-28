@@ -18,6 +18,7 @@ def afficher_matrice_transport():
     global matrice, nbr_P, nbr_C, matrice_de_transport
     provisions = [int(matrice[i][-1]) for i in range(nbr_P)]
     commandes = [int(matrice[-1][j]) for j in range(nbr_C)]
+    print("On va donc remplir la proposition choisi avec la méthode de balas-Hammer :\n")
     matrice_de_transport = remplir_matrice_transport(matrice, provisions, commandes)
     for i in range(len(matrice_de_transport)):
         matrice_de_transport[i].append(provisions[i])
@@ -28,6 +29,8 @@ def afficher_matrice_transport():
     print("Matrice de transport:")
     for ligne in matrice_de_transport:
         print(ligne)
+
+
 
 if __name__ == '__main__':
     continuer = True
