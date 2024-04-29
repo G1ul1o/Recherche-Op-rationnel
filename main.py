@@ -4,7 +4,7 @@ from fonction_général import *
 from Nord_Ouest import *
 from Verif_dégénérée import *
 from cout_potentiels_marginaux import *
-
+import time
 
 def lire_fichier():
     global nbr_C, nbr_P, matrice
@@ -48,12 +48,14 @@ def Methode_NO():
         global matrice_NO
 
         print("On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :\n")
+        #Lancement de la méthode Nord-Ouest
         matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
         print("La matrice avec la méthode de Nord-Ouest est :")
 
         affichage_proposition_de_transport(matrice,matrice_NO,nbr_C,nbr_P)
         print()
 
+#verification si la proposition est non-dégénérée
 def verif_degeneree(matrice_transport):
         global graph
         verif_presence_cycle = False
@@ -88,10 +90,12 @@ def verif_degeneree(matrice_transport):
                 print()
                 graphe_connexe(sous_graphes_connexes, matrice_transport,graph)
 
+#methode du marche pieds avec potentiels
 def methode_marche_avec_potentiels(proposition_de_transport):
     global graph
     continuer = True
     while continuer==True:
+        #creation des matrices de cout potentiel et cout marginaux
         print("On calcule les matrices de couts potentiels et de couts marginaux")
         matrice_cout_potentiel, matrice_cout_marginaux = calcul_matrice_potentiels_marginaux(graph, matrice,nbr_P,nbr_C)
 
@@ -144,10 +148,12 @@ if __name__ == '__main__':
         elif choix == 3:
             afficher_matrices()
             Methode_NO()
-            verif_degeneree(matrice_NO)
-            methode_marche_avec_potentiels(matrice_NO)
-            print("Proposotion finale:")
-            affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
+
+            if matrice_NO!=None:
+                verif_degeneree(matrice_NO)
+                methode_marche_avec_potentiels(matrice_NO)
+                print("Proposotion finale:")
+                affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
 
 
         elif choix ==4:
