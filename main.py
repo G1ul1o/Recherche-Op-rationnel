@@ -27,8 +27,11 @@ def Methode_Balas():
         matrice_de_transport[i].append(provisions[i])
 
     ajout_commande = []
+    somme = 0
     for commande in commandes:
         ajout_commande.append(commande)
+        somme+=commande
+    ajout_commande.append(somme)
     matrice_de_transport.append(ajout_commande)
     affichage_proposition_de_transport(matrice,matrice_de_transport,nbr_C,nbr_P)
 
@@ -46,7 +49,6 @@ def Methode_NO():
 
         print("On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :\n")
         matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
-
         print("La matrice avec la méthode de Nord-Ouest est :")
 
         affichage_proposition_de_transport(matrice,matrice_NO,nbr_C,nbr_P)
@@ -109,7 +111,7 @@ def methode_marche_avec_potentiels(proposition_de_transport):
 
         if presence_arrete_negative == True:
 
-            while absence_de_cycle == False or verif_connexe == False:
+            while absence_de_cycle == False:
 
                 absence_de_cycle, cycle = verif_cycle(graph)
                 if absence_de_cycle == False:
@@ -121,23 +123,6 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                     affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
                     print()
 
-                # vérification connexe
-                nbr_sommet = nbr_C + nbr_P
-                verif_connexe = detection_de_connexe(graph, nbr_sommet)
-
-                if verif_connexe == False:
-                        print("Les sous graphes connexes composant la proposition sont : ")
-                        print()
-
-                        sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
-
-                        for indice_print in range(len(sous_graphes_connexes)):
-                            print("Le sous graphe numéro", indice_print + 1, "est composant des sommets :",sous_graphes_connexes[indice_print])
-                        print()
-
-                        graphe_connexe(sous_graphes_connexes, proposition_de_transport, graph)
-                        print("Proposition de transport après maximisation de l'arrête")
-                        affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
 
 
         continuer=False
