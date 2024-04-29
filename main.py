@@ -9,7 +9,11 @@ from cout_potentiels_marginaux import *
 def lire_fichier():
     global nbr_C, nbr_P, matrice
 
-    fichier = input("Entrez le numéro du fichier que vous voulez tester:")
+    while True :
+        fichier = input("Entrez le numéro du fichier que vous voulez tester:")
+        if int(fichier) <13:
+            break
+    
     nbr_C, nbr_P, matrice = lecture_fichier(fichier)
 
     print("La matrice est :")
@@ -48,9 +52,10 @@ def Methode_NO():
         matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
 
         print("La matrice avec la méthode de Nord-Ouest est :")
-
         affichage_proposition_de_transport(matrice,matrice_NO,nbr_C,nbr_P)
         print()
+        
+
 
 def verif_degeneree(matrice_transport):
         global graph
@@ -85,6 +90,15 @@ def verif_degeneree(matrice_transport):
                     print("Le sous graphe numéro",indice_print+1,"est composant des sommets :",sous_graphes_connexes[indice_print])
                 print()
                 graphe_connexe(sous_graphes_connexes, matrice_transport,graph)
+
+
+def calcul_des_couts(matrice,matrice_NO,nbr_C,nbr_P):
+    cout_total=0
+    for i in range(nbr_P):
+        for j in range(nbr_C):
+            cout_total += matrice_NO[i][j]*matrice[i][j]
+    print(f"Ainsi le coût total de cette proposition après la méthode du Nord Ouest est : {cout_total}")    
+
 
 def methode_marche_avec_potentiels(proposition_de_transport):
     global graph
@@ -151,27 +165,45 @@ if __name__ == '__main__':
     choix = 1
 
     while continuer:
-        if choix == 1:
-            lire_fichier()
-        elif choix == 2:
-            continuer = False
+        match choix :
+            
+            case 1:
+                lire_fichier()
+            case 2:
+                continuer = False
 
-        elif choix == 3:
-            afficher_matrices()
-            Methode_NO()
-            verif_degeneree(matrice_NO)
-            methode_marche_avec_potentiels(matrice_NO)
-            print("Proposotion finale:")
-            affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
+            case 3:
+                afficher_matrices()
+                Methode_NO()
+                verif_degeneree(matrice_NO)
+                methode_marche_avec_potentiels(matrice_NO)
+                print("Proposotion finale:")
+                affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
+                calcul = input("Voulez vous faire le calcul du cout total ? (Y)\n")
+                match calcul:
+                    case "Y":
+                        calcul_des_couts(matrice, matrice_NO, nbr_C,nbr_P)
+                    case _:
+                        matrice
+                          
 
 
-        elif choix ==4:
-            afficher_matrices()
-            Methode_Balas()
-            verif_degeneree(matrice_de_transport)
-            methode_marche_avec_potentiels(matrice_de_transport)
-            print("Proposotion finale:")
-            affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
+            case 4:
+                afficher_matrices()
+                Methode_Balas()
+                verif_degeneree(matrice_de_transport)
+                methode_marche_avec_potentiels(matrice_de_transport)
+                print("Proposotion finale:")
+                affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
+            
+            case _:
+                ## default case
+                print("Veuillez choisir une option valide (1,2,3 ou 4)\n")
+                
+                
+                
+        
+             
 
         if continuer == True:
             choix = int(input("Que souhaitez-vous faire ?\n"
