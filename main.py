@@ -3,6 +3,7 @@ from Balas import *
 from fonction_général import *
 from Nord_Ouest import *
 from Verif_dégénérée import *
+from cout_potentiels_marginaux import *
 
 
 def lire_fichier():
@@ -12,28 +13,24 @@ def lire_fichier():
     nbr_C, nbr_P, matrice = lecture_fichier(fichier)
 
     print("La matrice est :")
-    for i in range(nbr_P + 1):
-        for j in range(nbr_C + 1):
-            print(matrice[i][j], end=" ")
-        print()
+    affichage_couts(matrice, nbr_C, nbr_P)
 
 
 
-def afficher_matrice_transport():
-    global matrice, nbr_P, nbr_C, matrice_de_transport
+def Methode_Balas():
+    global matrice_de_transport
     provisions = [int(matrice[i][-1]) for i in range(nbr_P)]
     commandes = [int(matrice[-1][j]) for j in range(nbr_C)]
-    print("On va donc remplir la proposition choisi avec la méthode de balas-Hammer :\n")
+    print("On va créer une proposition de transport de la proposition selectionné avec la méthode de balas-Hammer :\n")
     matrice_de_transport = remplir_matrice_transport(matrice, provisions, commandes)
-    for i in range(len(matrice_de_transport)):
+    for i in range (nbr_P):
         matrice_de_transport[i].append(provisions[i])
+
     ajout_commande = []
     for commande in commandes:
         ajout_commande.append(commande)
     matrice_de_transport.append(ajout_commande)
-    print("Matrice de transport:")
-    for ligne in matrice_de_transport:
-        print(ligne)
+    affichage_proposition_de_transport(matrice,matrice_de_transport,nbr_C,nbr_P)
 
 def afficher_matrices():
 
@@ -46,21 +43,107 @@ def afficher_proposition_de_transport():
 
 def Methode_NO():
         global matrice_NO
+
+        print("On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :\n")
         matrice_NO = Nord_Ouest(matrice, nbr_C, nbr_P)
 
         print("La matrice avec la méthode de Nord-Ouest est :")
 
         affichage_proposition_de_transport(matrice,matrice_NO,nbr_C,nbr_P)
+        print()
 
-def verif_degeneree():
-        global gaph
-        graph = creation_graphe(matrice_NO,nbr_C,nbr_P)
-        for i in range(len(graph)):
-            print(graph[i].nom_sommet, ",", graph[i].liaison)
+def verif_degeneree(matrice_transport):
+        global graph
+        verif_presence_cycle = False
+        verif_connexe= False
+        graph = creation_graphe(matrice_transport,nbr_C,nbr_P)
 
 
-        verif = verif_cycle(graph)
-        print(verif)
+        while verif_presence_cycle == False or verif_connexe == False:
+
+            #vérification présence cycle
+            verif_presence_cycle,cycle = verif_cycle(graph)
+
+            if verif_presence_cycle == True :
+                print("Cette proposition de transport est acyclique")
+                print()
+
+            else:
+                print("Ce graphe contient un cycle", cycle)
+                print()
+
+            #vérification connexe
+            nbr_sommet =  nbr_C + nbr_P
+            verif_connexe = detection_de_connexe(graph, nbr_sommet)
+
+            if verif_connexe == False:
+                print("Les sous graphes connexes composant la proposition sont : ")
+                print()
+
+                sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
+                for indice_print in range (len(sous_graphes_connexes)):
+                    print("Le sous graphe numéro",indice_print+1,"est composant des sommets :",sous_graphes_connexes[indice_print])
+                print()
+                graphe_connexe(sous_graphes_connexes, matrice_transport,graph)
+
+def methode_marche_avec_potentiels(proposition_de_transport):
+    global graph
+    continuer = True
+    while continuer==True:
+        print("On calcule les matrices de couts potentiels et de couts marginaux")
+        matrice_cout_potentiel, matrice_cout_marginaux = calcul_matrice_potentiels_marginaux(graph, matrice,nbr_P,nbr_C)
+
+        print("La matrice coûts potentiel:")
+        affichage_couts_potentiels_marginaux(matrice_cout_potentiel, nbr_C, nbr_P)
+
+        print("La matrice coûts marginaux:")
+        affichage_couts_potentiels_marginaux(matrice_cout_marginaux, nbr_C, nbr_P)
+
+        absence_de_cycle = False
+        verif_connexe = False
+
+        presence_arrete_negative, arrete_a_ajouter = selection_arrete_maximisé(matrice_cout_marginaux, graph)
+
+        print("Proposition de transport")
+        affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
+
+        if presence_arrete_negative == True:
+
+            while absence_de_cycle == False or verif_connexe == False:
+
+                absence_de_cycle, cycle = verif_cycle(graph)
+                if absence_de_cycle == False:
+                    print("Presence d'un cycle")
+
+                    Maximisation(graph, cycle, proposition_de_transport, arrete_a_ajouter, nbr_C, nbr_P)
+                    graph = creation_graphe(proposition_de_transport, nbr_C, nbr_P)
+                    print("Proposition de transport après maximisation de l'arrête")
+                    affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
+                    print()
+
+                # vérification connexe
+                nbr_sommet = nbr_C + nbr_P
+                verif_connexe = detection_de_connexe(graph, nbr_sommet)
+
+                if verif_connexe == False:
+                        print("Les sous graphes connexes composant la proposition sont : ")
+                        print()
+
+                        sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
+
+                        for indice_print in range(len(sous_graphes_connexes)):
+                            print("Le sous graphe numéro", indice_print + 1, "est composant des sommets :",sous_graphes_connexes[indice_print])
+                        print()
+
+                        graphe_connexe(sous_graphes_connexes, proposition_de_transport, graph)
+                        print("Proposition de transport après maximisation de l'arrête")
+                        affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
+
+
+        continuer=False
+
+
+
 
 
 if __name__ == '__main__':
@@ -70,21 +153,30 @@ if __name__ == '__main__':
     while continuer:
         if choix == 1:
             lire_fichier()
-        elif choix == 3:
-            afficher_matrice_transport()
-
-        
-            afficher_matrices()
-            Methode_NO()
-            verif_degeneree()
-
-
         elif choix == 2:
             continuer = False
 
-            
-        choix = int(input("Que souhaitez-vous faire ?\n"
+        elif choix == 3:
+            afficher_matrices()
+            Methode_NO()
+            verif_degeneree(matrice_NO)
+            methode_marche_avec_potentiels(matrice_NO)
+            print("Proposotion finale:")
+            affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
+
+
+        elif choix ==4:
+            afficher_matrices()
+            Methode_Balas()
+            verif_degeneree(matrice_de_transport)
+            methode_marche_avec_potentiels(matrice_de_transport)
+            print("Proposotion finale:")
+            affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
+
+        if continuer == True:
+            choix = int(input("Que souhaitez-vous faire ?\n"
                           "1. Changer de fichier\n"
                           "2. Quitter\n"
-                          "3. Afficher la matrice de transport\n"
+                          "3. Afficher la matrice de transport avec la méthode de Nord Ouest\n"
+                          "4. Afficher la matrice de transport avec Balas\n"
                           "Entrez votre choix : "))

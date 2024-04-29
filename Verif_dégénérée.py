@@ -123,7 +123,6 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
 
     indices_P = []
     indices_C = []
-
     #extraction des données indice 0 lettre et indice 1 chiffre :
     indice_ligne_ajouter = int(ligne_ajouter[0][1])-1
     indice_colonne_ajouter = int(ligne_ajouter[1][1])-1
@@ -159,19 +158,40 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
 
     for case_cycle in composition_cycle:
         if case_cycle[0] == indice_ligne_ajouter and case_cycle[1]!= indice_colonne_ajouter:
-            a_compenser = propositon_de_transport[indice_ligne_ajouter][case_cycle[1]]
-            propositon_de_transport[indice_ligne_ajouter][case_cycle[1]] = 0
-            print("On supprime la liaison:",("P"+str(indice_ligne_ajouter+1)),("C"+str(cycle[1]+1)))
+            a_compenser_ligne = propositon_de_transport[indice_ligne_ajouter][case_cycle[1]]
+            indice_colonne_a_supprimer = case_cycle[1]
 
-    propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter] = a_compenser
+        if case_cycle[0] != indice_ligne_ajouter and case_cycle[1] == indice_colonne_ajouter:
+            a_compenser_colonne = propositon_de_transport[case_cycle[0]][indice_colonne_ajouter]
+            indice_ligne_a_supprimer = case_cycle[0]
+
+
+    #on chosi entre les deux
+    if  a_compenser_ligne < a_compenser_colonne:
+        a_compenser=a_compenser_ligne
+        propositon_de_transport[indice_ligne_ajouter][indice_colonne_a_supprimer] = 0
+        print("On supprime la liaison:",("P"+ str(indice_ligne_ajouter+1)),("C"+str(indice_colonne_a_supprimer+1)))
+    else:
+        a_compenser = a_compenser_colonne
+        propositon_de_transport[indice_ligne_a_supprimer][indice_colonne_ajouter] = 0
+        print("On supprime la liaison:", ("P" + str(indice_ligne_a_supprimer+1)), ("C" + str(indice_colonne_ajouter + 1)))
+
+    if propositon_de_transport[indice_ligne_ajouter][nbr_C] >= a_compenser and propositon_de_transport[nbr_P][indice_colonne_ajouter]>=a_compenser:
+        propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter] = a_compenser
+    else:
+        propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter]=min(propositon_de_transport[indice_ligne_ajouter][nbr_C],propositon_de_transport[nbr_P][indice_colonne_ajouter])
+        a_compenser = a_compenser - propositon_de_transport[indice_ligne_ajouter][indice_colonne_ajouter]
 
     for case_cycle in composition_cycle:
         if case_cycle[1] == indice_colonne_ajouter and case_cycle[0]!=indice_ligne_ajouter:
-            propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] -= a_compenser
+            if (propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] - a_compenser) >= 0:
+                propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] -= a_compenser
+            else:
+                propositon_de_transport[case_cycle[0]][indice_colonne_ajouter] = 0
 
     ligne = False
     colonne = False
-    while ligne!=True and colonne!=True:
+    while ligne!=True or colonne!=True:
         ligne = True
         colonne = True
         for i in range (nbr_P):
@@ -182,47 +202,50 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
             a_compenser = abs(a_compenser)
             for j in range (nbr_C):
                  provision += propositon_de_transport[i][j]
+            print("provision:",provision)
+            print("max",propositon_de_transport[i][nbr_C])
+            print(propositon_de_transport)
             if provision != propositon_de_transport[i][nbr_C]:
                 if provision > propositon_de_transport[i][nbr_C]:
-                    a_compenser= (-a_compenser)
+                   a_compenser = -a_compenser
                 ajustement_proposition_ligne(propositon_de_transport,i,indice_ligne_ajouter,indice_colonne_ajouter,a_compenser,composition_cycle)
                 ligne = False
 
-
         for indice_colonne in range(nbr_C):
 
-            provision = 0
+                provision = 0
 
-            # valeur absolue
-            a_compenser = abs(a_compenser)
-            for j in range(nbr_P):
-                provision += propositon_de_transport[j][indice_colonne]
-            if provision != propositon_de_transport[nbr_P][indice_colonne]:
-                if provision > propositon_de_transport[nbr_P][indice_colonne]:
-                    a_compenser = (-a_compenser)
-                ajustement_proposition_colonne(propositon_de_transport, indice_colonne, indice_ligne_ajouter, indice_colonne_ajouter,
-                                             a_compenser, composition_cycle)
-                colonne=False
+                # valeur absolue
+                a_compenser = abs(a_compenser)
+                for j in range(nbr_P):
+                    provision += propositon_de_transport[j][indice_colonne]
+
+                if provision != propositon_de_transport[nbr_P][indice_colonne]:
+                    if provision > propositon_de_transport[nbr_P][indice_colonne]:
+                        a_compenser = -a_compenser
+                    ajustement_proposition_colonne(propositon_de_transport, indice_colonne, indice_ligne_ajouter, indice_colonne_ajouter,
+                                                 a_compenser, composition_cycle)
+                    colonne=False
 
 
 def ajustement_proposition_ligne(propositon_de_transport,ligne_a_modifier,indice_ligne_ajouter,indice_colonne_ajouter,a_ajouter,composition_cycle):
 
-   for cycle in composition_cycle:
+    for cycle in composition_cycle:
 
-       if cycle[1] != indice_colonne_ajouter :
+       if cycle[1] != indice_colonne_ajouter or cycle[0] != indice_ligne_ajouter:
            #on exclu la case que nous avons ajouter et on garde la ligne qu'on veut modifier
-           if cycle[0] != indice_ligne_ajouter and cycle[0]==ligne_a_modifier:
-
+           if  cycle[0] == ligne_a_modifier:
                 propositon_de_transport[cycle[0]][cycle[1]] += a_ajouter
+                return
 
 
 def ajustement_proposition_colonne (propositon_de_transport,colonne_a_modifer,indice_ligne_ajouter,indice_colonne_ajouter,a_ajouter,composition_cycle):
+    print(propositon_de_transport)
     for cycle in composition_cycle:
 
-        if cycle[0] != indice_ligne_ajouter:
+        if cycle[0] != indice_ligne_ajouter and cycle[1] != indice_colonne_ajouter:
             # on exclu la case que nous avons ajouter et on garde la colonne qu'on veut modifier
-            if cycle[1] != indice_colonne_ajouter and cycle[1] == colonne_a_modifer:
-
+            if  cycle[1] == colonne_a_modifer:
                 propositon_de_transport[cycle[0]][cycle[1]] += a_ajouter
 
 def detection_de_connexe(graph,nbr_sommet):
@@ -245,9 +268,10 @@ def detection_de_connexe(graph,nbr_sommet):
 
     if nbr_arrete_parcouru != nbr_sommet - 1:
         verif=False
-        print("Ce graphe n'est pas connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print()
     else:
-        print("Ce graphe est connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
 
     return verif
 def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcouru):
@@ -322,61 +346,9 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
 
             if graph[i].nom_sommet == ("C"+str(indice_colonne_ajouter+1)):
                 graph[i].liaison.append("P"+str(indice_ligne_ajouter+1))
-                print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1))
+                print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1),"pour rendre notre gaphe connexe")
+                print()
 
             if graph[i].nom_sommet == ("P"+str(indice_ligne_ajouter+1)):
                 graph[i].liaison.append("C" + str(indice_colonne_ajouter + 1))
-
-proposition_de_transport_test_connexe = [[35,0,0,25,60],[0,0,30,0,30],[15,75,0,0,90],[50,75,30,25,180]]
-proposition_de_transport_test_connexe2 = [[35,0,0,25,60],[0,0,30,0,30],[15,75,0,0,90],[50,75,30,25,180]]
-proposition_de_transport2 = [[10,5,2,300],[12,5,1,200],[10,1,7,100],[150,150,300,600]]
-
-
-nbr_C = 4
-nbr_P = 3
-
-nbr_C2=3
-nbr_P2=3
-graph1 = creation_graphe(proposition_de_transport_test_connexe,nbr_C,nbr_P)
-graph2 = creation_graphe(proposition_de_transport2,nbr_C,nbr_P)
-graph_test_connexe2= creation_graphe(proposition_de_transport_test_connexe2,nbr_C2,nbr_P2)
-
-'''for i in range(len(graph1)):
-    print(graph1[i].nom_sommet ,",", graph1[i].liaison)
-    if graph1[i].nom_sommet=="C1":
-        liaison = graph1[i].liaison'''
-'''nbr_sommet=nbr_C+nbr_P
-verif = detection_de_connexe(graph1,nbr_sommet)
-
-if verif == False:
-    sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph1,nbr_P)
-
-print(sous_graphes_connexes)
-
-graphe_connexe(sous_graphes_connexes,proposition_de_transport_test_connexe,graph1)
-
-for i in range(len(graph1)):
-    print(graph1[i].nom_sommet ,",", graph1[i].liaison)
-    if graph1[i].nom_sommet=="C1":
-        liaison = graph1[i].liaison
-
-verif = detection_de_connexe(graph1,nbr_sommet)'''
-
-for i in range(len(graph_test_connexe2)):
-    print(graph_test_connexe2[i].nom_sommet ,",", graph_test_connexe2[i].liaison)
-
-nbr_sommet_graphe_test_connexe_2 = nbr_C2+nbr_P2
-verif_test_connexe_2 = detection_de_connexe(graph_test_connexe2,nbr_sommet_graphe_test_connexe_2)
-
-if verif_test_connexe_2 == False:
-    sous_graphes_connexes_test_connexes_2 = recherche_des_sous_graphes_connexes(graph_test_connexe2,nbr_P2)
-
-print(sous_graphes_connexes_test_connexes_2)
-
-graphe_connexe(sous_graphes_connexes_test_connexes_2,proposition_de_transport_test_connexe2,graph_test_connexe2)
-
-for i in range(len(graph_test_connexe2)):
-    print(graph_test_connexe2[i].nom_sommet,",", graph_test_connexe2[i].liaison)
-
-verif_test_connexe_2 = detection_de_connexe(graph_test_connexe2,nbr_sommet_graphe_test_connexe_2)
 
