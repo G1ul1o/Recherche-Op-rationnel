@@ -16,7 +16,7 @@ def lire_fichier():
     affichage_couts(matrice, nbr_C, nbr_P)
 
 
-
+#méthode qui return une proposition de matrice de transport à l'aide du méthode de Balas-Hammer
 def Methode_Balas():
     global matrice_de_transport
     provisions = [int(matrice[i][-1]) for i in range(nbr_P)]
@@ -25,7 +25,7 @@ def Methode_Balas():
     matrice_de_transport = remplir_matrice_transport(matrice, provisions, commandes)
     for i in range (nbr_P):
         matrice_de_transport[i].append(provisions[i])
-
+#code qui permet d'ajouter les commandes et provisions dans la matrice de fin
     ajout_commande = []
     for commande in commandes:
         ajout_commande.append(commande)
