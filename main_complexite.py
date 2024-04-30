@@ -8,7 +8,9 @@ from cout_potentiels_marginaux import *
 import random
 import matplotlib.pyplot as plt
 
-# Données du tableau
+
+
+'''# Données du tableau
 categories = ['A', 'B', 'C', 'D']
 valeurs = [10, 20, 15, 25]
 
@@ -18,7 +20,7 @@ plt.bar(categories, valeurs)
 # Ajouter des étiquettes et un titre
 plt.xlabel('Catégories')
 plt.ylabel('Valeurs')
-plt.title('Graphe à barres')
+plt.title('Graphe à barres')'''
 
 # Afficher le graphe
 plt.show()
@@ -63,23 +65,23 @@ def methode_marche_avec_potentiels(proposition_de_transport,matrice_cout_unitair
     continuer = True
     while continuer==True:
         #creation des matrices de cout potentiel et cout marginaux
-        print("On calcule les matrices de couts potentiels et de couts marginaux")
+        #print("On calcule les matrices de couts potentiels et de couts marginaux")
         graph = creation_graphe(proposition_de_transport, taille_matrice, taille_matrice)
         matrice_cout_potentiel, matrice_cout_marginaux = calcul_matrice_potentiels_marginaux(graph, matrice_cout_unitaire_aleatoire,taille_matrice,taille_matrice)
 
-        print("La matrice coûts potentiel:")
-        affichage_couts_potentiels_marginaux(matrice_cout_potentiel, taille_matrice, taille_matrice)
+        '''print("La matrice coûts potentiel:")
+        affichage_couts_potentiels_marginaux(matrice_cout_potentiel, taille_matrice, taille_matrice)'''
 
-        print("La matrice coûts marginaux:")
-        affichage_couts_potentiels_marginaux(matrice_cout_marginaux, taille_matrice, taille_matrice)
+        '''print("La matrice coûts marginaux:")
+        affichage_couts_potentiels_marginaux(matrice_cout_marginaux, taille_matrice, taille_matrice)'''
 
         absence_de_cycle = False
         verif_connexe = False
 
         presence_arrete_negative, arrete_a_ajouter = selection_arrete_maximisé(matrice_cout_marginaux, graph)
 
-        print("Proposition de transport")
-        affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
+        '''print("Proposition de transport")
+        affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)'''
 
         if presence_arrete_negative == True:
 
@@ -87,13 +89,13 @@ def methode_marche_avec_potentiels(proposition_de_transport,matrice_cout_unitair
 
                 absence_de_cycle, cycle = verif_cycle(graph)
                 if absence_de_cycle == False:
-                    print("Presence d'un cycle")
+                   # print("Presence d'un cycle")
 
                     Maximisation(graph, cycle, proposition_de_transport, arrete_a_ajouter, taille_matrice, taille_matrice)
                     graph = creation_graphe(proposition_de_transport, taille_matrice, taille_matrice)
-                    print("Proposition de transport après maximisation de l'arrête")
+                    '''print("Proposition de transport après maximisation de l'arrête")
                     affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
-                    print()
+                    print()'''
 
 
 
@@ -149,6 +151,7 @@ def generation_matrice_aleatoire(taille_matrice):
     matrice_prix_unitaire_aleatoire.append(matrice_prix_unitaire_colonne)
     return  matrice_prix_unitaire_aleatoire
 
+
 if __name__ == '__main__':
 
     choix = int(input("Que souhaitez-vous faire ?\n"
@@ -157,9 +160,8 @@ if __name__ == '__main__':
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))
-    match choix:
 
-        case 1:
+    if choix== 1:
             nuage_de_points = []
             for i in range (100):
                 # Creation matrice aléatoire
@@ -175,7 +177,7 @@ if __name__ == '__main__':
                 nuage_de_points.append(duree)
             print(nuage_de_points)
 
-        case 2 :
+    elif choix ==2 :
             nuage_de_points = []
             for i in range(100):
                 taille_matrice = int(input("Quel taille voulez-vous implémenter ?"))
@@ -183,15 +185,17 @@ if __name__ == '__main__':
                 provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
                 commandes = [int(matrice_prix_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
 
+                print("debut")
                 debut = time.process_time()
                 matrice_de_transport = remplir_matrice_transport(matrice_prix_unitaire_aleatoire, provisions, commandes)
                 fin = time.process_time()
 
                 duree = fin - debut
+                print(duree)
                 nuage_de_points.append(duree)
             print(nuage_de_points)
 
-        case 3 :
+    elif choix == 3 :
             nuage_de_points = []
             for i in range(100):
                 # Creation matrice aléatoire
@@ -209,7 +213,7 @@ if __name__ == '__main__':
                 nuage_de_points.append(duree)
             print(nuage_de_points)
 
-        case 4 :
+    elif choix == 4 :
 
             nuage_de_points = []
             for i in range(100):
@@ -230,6 +234,3 @@ if __name__ == '__main__':
                 nuage_de_points.append(duree)
             print(nuage_de_points)
 
-        case _:
-            ## default case
-            print("Veuillez choisir une option valide (1,2,3 ou 4)\n")
