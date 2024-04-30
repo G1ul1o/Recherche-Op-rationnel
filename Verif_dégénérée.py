@@ -40,15 +40,26 @@ def verif_cycle (graph):
     sommet_parcouru = []
     verif = True
     cycle = []
-    # On récupère C1
-    index = recherche_indice(graph, "C1")
-    C1 = graph[index]
-    sommet_parcouru.append("C1")
-    # On passe dans les successeurs de C1
-    for liaison in C1.liaison:
-        sommet_parcouru.append(liaison)
-        index = recherche_indice(graph, liaison)
-        verif, sommet_cycle = verif_cycle_recursif(graph[index], "C1", sommet_parcouru, graph, True)
+    '''for element in graph:
+        print("gaphe;",element.nom_sommet,element.liaison)'''
+    #recuperation max
+    nbr_C=0
+    verif=True
+    for element in graph:
+        if element.nom_sommet[0] == "C":
+            nbr_C += 1
+    for i in range (nbr_C):
+        if verif == True:
+            index = recherche_indice(graph, "C"+str(i+1))
+            C = graph[index]
+            # On passe dans les successeurs de C1
+            for liaison in C.liaison:
+                sommet_parcouru = []
+                sommet_parcouru.append("C"+str(i+1))
+                sommet_parcouru.append(liaison)
+                index = recherche_indice(graph, liaison)
+                verif, sommet_cycle = verif_cycle_recursif(graph[index], "C"+str(i+1), sommet_parcouru, graph, True)
+
     if verif == False:
         cycle = []
         index = recherche_indice(graph, sommet_cycle)
@@ -85,12 +96,11 @@ def verif_cycle_recursif(sommet,sommet_parent,sommet_parcouru,graph,verif):
     return nbr_sommet_parcouru,sommet_cycle
 
 def recherche_cycle (sommet,sommet_parent,cycle,graph,sommet_départ,chemin_parcouru):
-
+    print("recherche cycle",sommet.nom_sommet,chemin_parcouru,sommet.liaison)
     if sommet.nom_sommet == sommet_départ:
         for i in range (len(chemin_parcouru)):
             cycle.append(chemin_parcouru[i])
         return
-
     # On récupère les liaisons dans le graph on veut le cycle donc on ne compare pas avec chemin parcouru
     for liaison in sommet.liaison:
 
@@ -210,33 +220,37 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
 
         if minimum_ligne >= minimum_colonne:
             a_compenser = minimum_colonne
-            sommet_a_supprimer = sommet_a_supprimer_colonne
+
         else:
             a_compenser = minimum_ligne
-            sommet_a_supprimer =sommet_a_supprimer_ligne
+
 
     elif minimum_ligne==-1 and minimum_colonne!=-1:
         a_compenser = minimum_colonne
-        sommet_a_supprimer = sommet_a_supprimer_colonne
+
     elif minimum_ligne!=-1 and minimum_colonne==-1:
         a_compenser = minimum_ligne
-        sommet_a_supprimer = sommet_a_supprimer_ligne
+
 
 
     pair = 0
+    sommet_a_supprimer = []
     for element in composition_cycle:
         if pair % 2 == 0:
             propositon_de_transport[element[0]][element[1]]+=a_compenser
         else:
             propositon_de_transport[element[0]][element[1]]-=a_compenser
+            if propositon_de_transport[element[0]][element[1]] == 0:
+                sommet_a_supprimer.append(element)
         pair+=1
 
     for i in range(len(graph)):
+        for indice in sommet_a_supprimer:
+            if graph[i].nom_sommet == "P"+str(indice[0]+1):
+                graph[i].liaison.remove("C"+str(indice[1]+1))
 
-        if graph[i].nom_sommet == "P"+str(sommet_a_supprimer[0]+1):
-            graph[i].liaison.remove("C"+str(sommet_a_supprimer[1]+1))
-        elif graph[i].nom_sommet == "C"+str(sommet_a_supprimer[1]+1):
-            graph[i].liaison.remove("P"+str(sommet_a_supprimer[0]+1))
+            elif graph[i].nom_sommet == "C"+str(indice[1]+1):
+                graph[i].liaison.remove("P"+str(indice[0]+1))
 
     if a_compenser == 0:
         return True
@@ -319,8 +333,7 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
     sommet_ajouter_connexe = []
     indice_ligne_graphe = []
     indice_colonne_graphe_bis=[]
-    print(sous_graphes_connexes[0])
-    input()
+
     for sommet in sous_graphes_connexes[0]:
         if sommet[0] == "P":
             indice_ligne_graphe.append(int(''.join([caractere for caractere in sommet if caractere.isdigit()]))-1)
@@ -363,10 +376,8 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
                     indice_ligne_ajouter = indice_ligne_bis
                     indice_colonne_ajouter = indice_colonne_bis
 
-        print(indice_ligne_ajouter,indice_colonne_ajouter)
-        print(indice_ligne_graphe,indice_colonne_graphe_connexe)
-        print(indice_ligne_graphe_connexe_bis,indice_colonne_graphe_bis)
-        input()
+
+
 
         sommet_ajouter =[]
         for i in range(len(graph)):

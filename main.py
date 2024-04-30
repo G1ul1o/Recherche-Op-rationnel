@@ -142,6 +142,19 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                     print("fin")
                     print("Proposition de transport après maximisation de l'arrête")
                     affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
+                    nbr_sommet = nbr_C + nbr_P
+                    verif_connexe = detection_de_connexe(graph, nbr_sommet)
+
+                    if verif_connexe == False:
+                        print("Les sous graphes connexes composant la proposition sont : ")
+                        print()
+
+                        sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
+                        for indice_print in range(len(sous_graphes_connexes)):
+                            print("Le sous graphe numéro", indice_print + 1, "est composé des sommets :",
+                                  sous_graphes_connexes[indice_print])
+                        print()
+                        sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice, graph)
 
                     if sigma_0 == True :
                         print("ici")

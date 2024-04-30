@@ -8,7 +8,9 @@ def recherche_indice (graph,sommet_a_trouver):
 
 def calcul_matrice_potentiels_marginaux (graph,matrice,nbr_P,nbr_C):
 
-
+    #RESET DES COUT POTENTIELS/MARGINAUX
+    for liaison in graph :
+        liaison.cout_potentiel=None
     for indice_ligne in range(nbr_P):
         nom_sommet = "P"+str(indice_ligne+1)
         index= recherche_indice(graph,nom_sommet)
@@ -35,9 +37,11 @@ def calcul_matrice_potentiels_marginaux (graph,matrice,nbr_P,nbr_C):
         for liaison in graph[i].liaison:
             if liaison[0] == "P":
                 sommet_nul = liaison
-
+    print("debut")
     indexP = recherche_indice(graph,sommet_nul)
     graph[indexP].cout_potentiel = 0 #E(P(X) = 0
+    for liaison in graph :
+        print("cout_potentiel",liaison.cout_potentiel)
 
     for indices_potentiel in indices_potentiels[indexP]:
         index = recherche_indice(graph,("C"+str(indices_potentiel)))
@@ -99,9 +103,14 @@ def selection_arrete_maximisé(matrice_cout_marginaux,graph):
         arrete_a_ajouter.append("P"+str(indice_arrete_ajouter_ligne+1))
         arrete_a_ajouter.append("C"+str(indice_arrete_ajouter_colonne+1))
         index_P = recherche_indice(graph,"P"+str(indice_arrete_ajouter_ligne+1))
-        graph[index_P].liaison.append("C"+str(indice_arrete_ajouter_colonne+1))
+
+        if "C"+str(indice_arrete_ajouter_colonne+1) not in graph[index_P].liaison:
+            graph[index_P].liaison.append("C"+str(indice_arrete_ajouter_colonne+1))
+
         index_C = recherche_indice(graph,"C"+str(indice_arrete_ajouter_colonne+1))
-        graph[index_C].liaison.append("P"+str(indice_arrete_ajouter_ligne+1))
+
+        if "P"+str(indice_arrete_ajouter_ligne+1) not in graph[index_C].liaison:
+            graph[index_C].liaison.append("P"+str(indice_arrete_ajouter_ligne+1))
 
         #print("L'arrête",arrete_a_ajouter,"a un coût marginal négatif on l'ajoute donc a notre graphe")
 
