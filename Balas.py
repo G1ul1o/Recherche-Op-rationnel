@@ -1,6 +1,9 @@
 from lecture_fichier import lecture_fichier
 from main import *
+from fonction_général import *
+
 # fonction qui calcul la pénalité de chaque ligne et colonne.
+
 def calcul_penalites(matrice, nbr_P, nbr_C,ligne_banni,colonne_banni):
     penalites_lignes = []
     penalites_colonnes = []
@@ -137,13 +140,16 @@ def remplir_matrice_transport(matrice, provisions, commandes):
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
-            print("Pénalités des lignes:", penalites_lignes)
-            print("Pénalités des colonnes:", penalites_colonnes)
-            print("Meilleur choix : Ligne", meilleur_choix['ligne'], "Colonne", meilleur_choix['colonne'],
-                  "avec un coût de", meilleur_choix['cout'], "et une quantité maximale de", meilleur_choix['quantite'])
-            for i in range (len(matrice_transport)):
+            #print("Pénalités des lignes:", penalites_lignes)
+            #print("Pénalités des colonnes:", penalites_colonnes)
+            '''print("Meilleur choix : Ligne", meilleur_choix['ligne'], "Colonne", meilleur_choix['colonne'],
+                  "avec un coût de", meilleur_choix['cout'], "et une quantité maximale de", meilleur_choix['quantite'])'''
+            #print("Proposition de transport après modification (-1 sont des cases non rempli)")
+
+
+    ''' for i in range (len(matrice_transport)):
                 print(matrice_transport[i])
-            print('\n')
+            print('\n')'''
 
 
     return matrice_transport
