@@ -40,8 +40,6 @@ def verif_cycle (graph):
     sommet_parcouru = []
     verif = True
     cycle = []
-    '''for element in graph:
-        print("gaphe;",element.nom_sommet,element.liaison)'''
     #recuperation max
     nbr_C=0
     verif=True
@@ -63,7 +61,6 @@ def verif_cycle (graph):
     if verif == False:
         cycle = []
         index = recherche_indice(graph, sommet_cycle)
-        print("sommet_cycle",sommet_cycle)
         for liaison in (graph[index].liaison):
             chemin = []
             chemin.append(sommet_cycle)
@@ -96,7 +93,7 @@ def verif_cycle_recursif(sommet,sommet_parent,sommet_parcouru,graph,verif):
     return nbr_sommet_parcouru,sommet_cycle
 
 def recherche_cycle (sommet,sommet_parent,cycle,graph,sommet_départ,chemin_parcouru):
-    print("recherche cycle",sommet.nom_sommet,chemin_parcouru,sommet.liaison)
+
     if sommet.nom_sommet == sommet_départ:
         for i in range (len(chemin_parcouru)):
             cycle.append(chemin_parcouru[i])
@@ -117,10 +114,10 @@ def recherche_cycle (sommet,sommet_parent,cycle,graph,sommet_départ,chemin_parc
     return
 def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P):
     #extraction des données indice 0 lettre et indice 1 chiffre :
-    indice_ligne_ajouter = int(ligne_ajouter[0][1])-1
-    indice_colonne_ajouter = int(ligne_ajouter[1][1])-1
-    sommet_cycle_C = "C"+str(ligne_ajouter[1][1])
-    sommet_cycle_P = "P"+ str(ligne_ajouter[0][1])
+    indice_ligne_ajouter = int(''.join([caractere for caractere in ligne_ajouter[0] if caractere.isdigit()]))-1
+    indice_colonne_ajouter = int(''.join([caractere for caractere in ligne_ajouter[1] if caractere.isdigit()]))-1
+    sommet_cycle_C = "C"+str(''.join([caractere for caractere in ligne_ajouter[1] if caractere.isdigit()]))
+    sommet_cycle_P = "P"+ str(''.join([caractere for caractere in ligne_ajouter[0] if caractere.isdigit()]))
 
     # On cherche la première liaison
     index = recherche_indice(graph, sommet_cycle_P)
@@ -183,79 +180,58 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
 
             if ligne[0]=="P":
                 case_cycle = []
-                case_cycle.append(int(ligne[1])-1)
-                case_cycle.append(int(cycle_organise[i-1][1])-1)
+                case_cycle.append(int(''.join([caractere for caractere in ligne if caractere.isdigit()]))-1)
+                case_cycle.append(int(''.join([caractere for caractere in cycle_organise[i-1] if caractere.isdigit()]))-1)
                 composition_cycle.append(case_cycle)
 
                 case_cycle = []
-                case_cycle.append(int(ligne[1])-1)
-                case_cycle.append(int(cycle_organise[i +1][1])-1)
+                case_cycle.append(int(''.join([caractere for caractere in ligne if caractere.isdigit()]))-1)
+                case_cycle.append(int(''.join([caractere for caractere in cycle_organise[i +1] if caractere.isdigit()]))-1)
                 composition_cycle.append(case_cycle)
 
-
-
     minimum_ligne = -1
-    minimum_colonne = -1
 
+
+    pair = 0
     for case_cycle in composition_cycle:
-            #selection plus petite valeur parmi la ligne
-            if case_cycle[0] == indice_ligne_ajouter and case_cycle[1]!= indice_colonne_ajouter:
-
-                if minimum_ligne == -1:
-                    minimum_ligne = propositon_de_transport[case_cycle[0]][case_cycle[1]]
-                    sommet_a_supprimer_ligne = case_cycle
-                else:
-                    minimum_ligne = min(propositon_de_transport[case_cycle[0]][case_cycle[1]],minimum_ligne)
-                    sommet_a_supprimer_ligne = case_cycle
-        #selection plus petite valeur parmi la colonne
-            elif case_cycle[0] != indice_ligne_ajouter and case_cycle[1] == indice_colonne_ajouter:
-                if minimum_colonne == -1:
-                    minimum_colonne = propositon_de_transport[case_cycle[0]][case_cycle[1]]
-                    sommet_a_supprimer_colonne = case_cycle
-                else :
-                    minimum_colonne = min(propositon_de_transport[case_cycle[0]][case_cycle[1]],minimum_colonne)
-                    sommet_a_supprimer_colonne = case_cycle
-
-    if minimum_ligne!=-1 and minimum_colonne!=-1:
-
-        if minimum_ligne >= minimum_colonne:
-            a_compenser = minimum_colonne
-
-        else:
-            a_compenser = minimum_ligne
-
-
-    elif minimum_ligne==-1 and minimum_colonne!=-1:
-        a_compenser = minimum_colonne
-
-    elif minimum_ligne!=-1 and minimum_colonne==-1:
-        a_compenser = minimum_ligne
+        if pair %2 != 0:   #on récupère les impairs
+            if minimum_ligne == -1:
+                a_compenser = propositon_de_transport[case_cycle[0]][case_cycle[1]]
+            else:
+                a_compenser = min(propositon_de_transport[case_cycle[0]][case_cycle[1]], minimum_ligne)
+        pair +=1
 
 
 
     pair = 0
     sommet_a_supprimer = []
+
     for element in composition_cycle:
         if pair % 2 == 0:
             propositon_de_transport[element[0]][element[1]]+=a_compenser
         else:
-            propositon_de_transport[element[0]][element[1]]-=a_compenser
-            if propositon_de_transport[element[0]][element[1]] == 0:
+            if propositon_de_transport[element[0]][element[1]]- a_compenser == 0:
                 sommet_a_supprimer.append(element)
+            propositon_de_transport[element[0]][element[1]]-=a_compenser
+
         pair+=1
+
+
 
     for i in range(len(graph)):
         for indice in sommet_a_supprimer:
-            if graph[i].nom_sommet == "P"+str(indice[0]+1):
-                graph[i].liaison.remove("C"+str(indice[1]+1))
+            if len(indice)>1 :
+                if graph[i].nom_sommet == "P"+str(indice[0]+1):
+                    graph[i].liaison.remove("C"+str(indice[1]+1))
 
-            elif graph[i].nom_sommet == "C"+str(indice[1]+1):
-                graph[i].liaison.remove("P"+str(indice[0]+1))
+                elif graph[i].nom_sommet == "C"+str(indice[1]+1):
+                    graph[i].liaison.remove("P"+str(indice[0]+1))
 
     if a_compenser == 0:
         return True
     else:
         return False
+
 def detection_de_connexe(graph,nbr_sommet):
     sommet_parcouru = []
     verif = True
@@ -270,20 +246,20 @@ def detection_de_connexe(graph,nbr_sommet):
     for liaison in C1.liaison:
         sommet_parcouru.append(liaison)
         nbr_arrete_parcouru+=1
-        print(nbr_arrete_parcouru)
+
         index = recherche_indice(graph, liaison)
 
         nbr_arrete_parcouru= detection_de_connexe_recursif(graph,graph[index],nbr_arrete_parcouru, sommet_parcouru)
 
-    print(nbr_arrete_parcouru,nbr_sommet)
+
 
     if nbr_arrete_parcouru != nbr_sommet - 1:
         verif=False
-        #print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
         #print()
     else:
         verif=True
-        #print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
 
     return verif
 def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcouru):
@@ -293,7 +269,6 @@ def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcou
                 index = recherche_indice(graph, liaison)
                 sommet_parcouru.append(liaison)
                 nbr_sommet_parcouru+=1
-                print(nbr_sommet_parcouru)
 
                 nbr_sommet_parcouru = detection_de_connexe_recursif(graph,graph[index],nbr_sommet_parcouru, sommet_parcouru)
 
@@ -311,8 +286,8 @@ def recherche_des_sous_graphes_connexes(graph,nbr_P):
         for indice_sous_graphes_connexes in range (len(sous_graphes_connexes)):
             if (nom_sommet_P in sous_graphes_connexes[indice_sous_graphes_connexes]):
                 verif_sous_graphes_présence = True
-        #si le sommet n'est pas présent on continue sinon on ne le commence pas
 
+        #si le sommet n'est pas présent on continue sinon on ne le commence pas
         if verif_sous_graphes_présence == False:
             index=recherche_indice(graph,nom_sommet_P)
             recherche_des_sous_graphes_connexes_recursif(graph[index],chemin_parcouru,graph)
@@ -371,7 +346,7 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
                 #on prend le minimum de  cout
 
                 if cout_case_minimum > (matrice[indice_ligne_bis][indice_colonne_bis]):
-                    print("ici")
+
                     cout_case_minimum = matrice[indice_ligne_bis][indice_colonne_bis]
                     indice_ligne_ajouter = indice_ligne_bis
                     indice_colonne_ajouter = indice_colonne_bis
