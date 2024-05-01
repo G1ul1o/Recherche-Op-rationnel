@@ -12,7 +12,7 @@ def lire_fichier():
     fichier = input("Entrez le numéro du fichier que vous voulez tester:")
     nbr_C, nbr_P, matrice = lecture_fichier(fichier)
 
-    print("La matrice est :")
+    print("La matrice des couts est :")
     affichage_couts(matrice, nbr_C, nbr_P)
 
 
@@ -21,7 +21,7 @@ def Methode_Balas():
     global matrice_de_transport
     provisions = [int(matrice[i][-1]) for i in range(nbr_P)]
     commandes = [int(matrice[-1][j]) for j in range(nbr_C)]
-    print("On va créer une proposition de transport de la proposition selectionné avec la méthode de balas-Hammer :\n")
+    print("On va créer une proposition de transport de la proposition selectionné avec la méthode de Balas-Hammer :\n")
     matrice_de_transport = remplir_matrice_transport(matrice, provisions, commandes)
     for i in range (nbr_P):
         matrice_de_transport[i].append(provisions[i])
@@ -114,8 +114,7 @@ def methode_marche_avec_potentiels(proposition_de_transport):
         while presence_arrete_negative == True:
             # creation des matrices de cout potentiel et cout marginaux
             print("On calcule les matrices de couts potentiels et de couts marginaux")
-            for i in range (len(graph)):
-                print(graph[i].nom_sommet,graph[i].liaison)
+
             matrice_cout_potentiel, matrice_cout_marginaux = calcul_matrice_potentiels_marginaux(graph, matrice, nbr_P,nbr_C)
 
             print("La matrice coûts potentiel:")
@@ -130,16 +129,9 @@ def methode_marche_avec_potentiels(proposition_de_transport):
             while absence_de_cycle == False:
 
                 absence_de_cycle, cycle = verif_cycle(graph)
-                print(absence_de_cycle)
                 if absence_de_cycle == False:
                     print("Presence d'un cycle")
-                    print(cycle)
-                    for i in range (len(graph)):
-                        print(graph[i].nom_sommet, graph[i].liaison)
-                    print(arrete_a_ajouter)
-                    print("debut")
                     sigma_0=Maximisation(graph,cycle, proposition_de_transport, arrete_a_ajouter, nbr_C, nbr_P)
-                    print("fin")
                     print("Proposition de transport après maximisation de l'arrête")
                     affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
                     nbr_sommet = nbr_C + nbr_P
@@ -157,8 +149,9 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                         sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice, graph)
 
                     if sigma_0 == True :
-                        print("ici")
                         presence_arrete_negative = False
+
+                    #Test sigma
                     '''if sigma_0 == True:
                         print("sigma")
                         sigma_0_connexe(sommet_ajouter_connexe,graph)

@@ -140,16 +140,9 @@ def remplir_matrice_transport(matrice, provisions, commandes):
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
-            #print("Pénalités des lignes:", penalites_lignes)
-            #print("Pénalités des colonnes:", penalites_colonnes)
-            '''print("Meilleur choix : Ligne", meilleur_choix['ligne'], "Colonne", meilleur_choix['colonne'],
-                  "avec un coût de", meilleur_choix['cout'], "et une quantité maximale de", meilleur_choix['quantite'])'''
-            #print("Proposition de transport après modification (-1 sont des cases non rempli)")
-
-
-    ''' for i in range (len(matrice_transport)):
-                print(matrice_transport[i])
-            print('\n')'''
+            print("Pénalités des lignes:", penalites_lignes)
+            print("Pénalités des colonnes:", penalites_colonnes)
+            print("Proposition de transport après modification (-1 sont des cases non rempli)")
 
 
     return matrice_transport

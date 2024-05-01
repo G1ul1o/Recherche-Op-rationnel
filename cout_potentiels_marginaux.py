@@ -37,11 +37,10 @@ def calcul_matrice_potentiels_marginaux (graph,matrice,nbr_P,nbr_C):
         for liaison in graph[i].liaison:
             if liaison[0] == "P":
                 sommet_nul = liaison
-    print("debut")
+
     indexP = recherche_indice(graph,sommet_nul)
     graph[indexP].cout_potentiel = 0 #E(P(X) = 0
-    for liaison in graph :
-        print("cout_potentiel",liaison.cout_potentiel)
+
 
     for indices_potentiel in indices_potentiels[indexP]:
         index = recherche_indice(graph,("C"+str(indices_potentiel)))
@@ -51,7 +50,6 @@ def calcul_matrice_potentiels_marginaux (graph,matrice,nbr_P,nbr_C):
     while rempli==False:
         rempli = True
         for sommet in graph:
-            print(sommet.nom_sommet,sommet.cout_potentiel)
             if sommet.cout_potentiel == None :
                 rempli = False
         if rempli==False:
@@ -112,11 +110,10 @@ def selection_arrete_maximisé(matrice_cout_marginaux,graph):
         if "P"+str(indice_arrete_ajouter_ligne+1) not in graph[index_C].liaison:
             graph[index_C].liaison.append("P"+str(indice_arrete_ajouter_ligne+1))
 
-        #print("L'arrête",arrete_a_ajouter,"a un coût marginal négatif on l'ajoute donc a notre graphe")
+        print("L'arrête",arrete_a_ajouter,"a un coût marginal négatif on l'ajoute donc a notre graphe")
 
     else:
-        d=1 #a retirer
-        #print("La solution proposé est optimale")
+        print("La solution proposé est optimale")
 
     return presence_arrete_negative,arrete_a_ajouter
 
