@@ -19,56 +19,46 @@ def verif_degeneree(matrice_transport,taille_matrice):
         # vérification présence cycle
         verif_presence_cycle, cycle = verif_cycle(graph)
 
-        if verif_presence_cycle == True:
-            print("Cette proposition de transport est acyclique")
-            print()
-
-        else:
-            print("Ce graphe contient un cycle", cycle)
-            print()
-
         # vérification connexe
         nbr_sommet = taille_matrice + taille_matrice
         verif_connexe = detection_de_connexe(graph, nbr_sommet)
 
         if verif_connexe == False:
-            print("Les sous graphes connexes composant la proposition sont : ")
-            print()
+            '''print("Les sous graphes connexes composant la proposition sont : ")
+            print()'''
 
             sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, taille_matrice)
-            for indice_print in range(len(sous_graphes_connexes)):
+            '''for indice_print in range(len(sous_graphes_connexes)):
                 print("Le sous graphe numéro", indice_print + 1, "est composé des sommets :",
                       sous_graphes_connexes[indice_print])
-            print()
+            print()'''
             sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice_cout_unitaire_aleatoire, graph)
 
 
-        else:
-            print("Le graph est connexe")
+        #else:
+            #print("Le graph est connexe")
 
 def methode_marche_avec_potentiels(proposition_de_transport,matrice_cout_unitaire_aleatoire,taille_matrice):
     global graph
     continuer = True
     while continuer == True:
 
-        print("Proposition de transport")
-        affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
+        #print("Proposition de transport")
+        #affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
 
         verif_connexe = False
         presence_arrete_negative = True
         sigma_0 = False
         while presence_arrete_negative == True:
             # creation des matrices de cout potentiel et cout marginaux
-            print("On calcule les matrices de couts potentiels et de couts marginaux")
-            for i in range(len(graph)):
-                print(graph[i].nom_sommet, graph[i].liaison)
+            #print("On calcule les matrices de couts potentiels et de couts marginaux")
             matrice_cout_potentiel, matrice_cout_marginaux = calcul_matrice_potentiels_marginaux(graph, matrice_cout_unitaire_aleatoire, taille_matrice,taille_matrice)
 
-            print("La matrice coûts potentiel:")
-            affichage_couts_potentiels_marginaux(matrice_cout_potentiel, taille_matrice, taille_matrice)
+            #print("La matrice coûts potentiel:")
+            #affichage_couts_potentiels_marginaux(matrice_cout_potentiel, taille_matrice, taille_matrice)
 
-            print("La matrice coûts marginaux:")
-            affichage_couts_potentiels_marginaux(matrice_cout_marginaux, taille_matrice, taille_matrice)
+            #print("La matrice coûts marginaux:")
+            #affichage_couts_potentiels_marginaux(matrice_cout_marginaux, taille_matrice, taille_matrice)
 
             presence_arrete_negative, arrete_a_ajouter = selection_arrete_maximisé(matrice_cout_marginaux, graph)
 
@@ -76,30 +66,19 @@ def methode_marche_avec_potentiels(proposition_de_transport,matrice_cout_unitair
             while absence_de_cycle == False:
 
                 absence_de_cycle, cycle = verif_cycle(graph)
-                print(absence_de_cycle)
                 if absence_de_cycle == False:
-                    print("Presence d'un cycle")
-                    print(cycle)
-                    for i in range(len(graph)):
-                        print(graph[i].nom_sommet, graph[i].liaison)
-                    print(arrete_a_ajouter)
-                    print("debut")
+
                     sigma_0 = Maximisation(graph, cycle, proposition_de_transport, arrete_a_ajouter, taille_matrice, taille_matrice)
-                    print("fin")
-                    print("Proposition de transport après maximisation de l'arrête")
-                    affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
+
+                    #affichage_proposition_de_transport(matrice_cout_unitaire_aleatoire, proposition_de_transport, taille_matrice, taille_matrice)
                     nbr_sommet = taille_matrice + taille_matrice
                     verif_connexe = detection_de_connexe(graph, nbr_sommet)
 
                     if verif_connexe == False:
-                        print("Les sous graphes connexes composant la proposition sont : ")
-                        print()
+
 
                         sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, taille_matrice)
-                        for indice_print in range(len(sous_graphes_connexes)):
-                            print("Le sous graphe numéro", indice_print + 1, "est composé des sommets :",
-                                  sous_graphes_connexes[indice_print])
-                        print()
+
                         sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice_cout_unitaire_aleatoire, graph)
 
                     if sigma_0 == True:
@@ -144,7 +123,7 @@ def generation_matrice_aleatoire(taille_matrice):
 
     for indice_ligne in range (taille_matrice):
         for indice_colonne in range (taille_matrice):
-            matrice_prix_unitaire_aleatoire[indice_ligne][indice_colonne] = nombre_aleatoire = random.randint(1, 100)
+            matrice_prix_unitaire_aleatoire[indice_ligne][indice_colonne] = random.randint(1, 100)
 
     for indice_ligne in range (taille_matrice):
         for indice_colonne in range (taille_matrice):
@@ -194,7 +173,7 @@ if __name__ == '__main__':
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))
-    valeur_de_n = [10,20,100,200,400,800]
+    valeur_de_n = [10,20,100,200,400]
 
     if choix== 1:
             tableau_de_valeurs=[]
@@ -213,7 +192,7 @@ if __name__ == '__main__':
 
                     duree = fin - debut
                     nuage_de_points.append(duree)
-                print(duree)
+                #print(duree)
                 tableau_de_valeurs.append(nuage_de_points)
 
     elif choix ==2 :
@@ -231,7 +210,7 @@ if __name__ == '__main__':
                     fin = time.process_time()
 
                     duree = fin - debut
-                    print(duree)
+                    #print(duree)
                     nuage_de_points.append(duree)
                 tableau_de_valeurs.append(nuage_de_points)
 
@@ -250,11 +229,12 @@ if __name__ == '__main__':
                     methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
                     fin = time.process_time()
 
+
                     duree = fin - debut
                     print(duree)
 
                     nuage_de_points.append(duree)
-
+                print("changement de taille")
                 tableau_de_valeurs.append(nuage_de_points)
 
     elif choix == 4 :
@@ -276,8 +256,8 @@ if __name__ == '__main__':
                     fin = time.process_time()
 
                     duree = fin - debut
-                    print(duree)
-                    input()
+                    #print(duree)
+
                     nuage_de_points.append(duree)
                 tableau_de_valeurs.append(nuage_de_points)
 

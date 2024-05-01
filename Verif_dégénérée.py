@@ -255,12 +255,12 @@ def detection_de_connexe(graph,nbr_sommet):
 
     if nbr_arrete_parcouru != nbr_sommet - 1:
         verif=False
-        print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        #print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
         #print()
     else:
         verif=True
-        print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
-
+        #print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        #print()
     return verif
 def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcouru):
     for liaison in sommet.liaison:
@@ -358,8 +358,8 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
         for i in range(len(graph)):
                 if graph[i].nom_sommet == ("C"+str(indice_colonne_ajouter+1)):
                     graph[i].liaison.append("P"+str(indice_ligne_ajouter+1))
-                    print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1),"pour rendre notre gaphe connexe")
-                    print()
+                    '''print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1),"pour rendre notre gaphe connexe")
+                    print()'''
                     sommet_ajouter.append("P"+str(indice_ligne_ajouter+1))
                     sommet_ajouter.append("C"+str(indice_colonne_ajouter+1))
 
@@ -416,9 +416,9 @@ def graphe_connexe_sigma (sous_graphes_connexes,matrice,graph,sous_graphe_deja_a
         for i in range(len(graph)):
             if graph[i].nom_sommet == ("C" + str(indice_colonne_ajouter + 1)):
                 graph[i].liaison.append("P" + str(indice_ligne_ajouter + 1))
-                print("Ajout de la liaison", "C" + str(indice_colonne_ajouter + 1), "P" + str(indice_ligne_ajouter + 1),
-                      "pour rendre notre gaphe connexe")
-                print()
+                #print("Ajout de la liaison", "C" + str(indice_colonne_ajouter + 1), "P" + str(indice_ligne_ajouter + 1),
+                      #"pour rendre notre gaphe connexe")
+                #print()
                 sommet_ajouter.append("P" + str(indice_ligne_ajouter + 1))
                 sommet_ajouter.append("C" + str(indice_colonne_ajouter + 1))
 

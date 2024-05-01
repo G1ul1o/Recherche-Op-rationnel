@@ -31,11 +31,11 @@ def Nord_Ouest(matrice, nbr_C, nbr_P):
         somme_p += matrice[nbr_P][j]
     
     if somme_c == somme_p:
-        print("Les propositions et les commandes sont équilibrées")
+        #print("Les propositions et les commandes sont équilibrées")
         matrice_NO[nbr_P][nbr_C] = somme_c
         return matrice_NO
     else:
-        print("Les propositions et les commandes ne sont pas équilibrées")
+        #print("Les propositions et les commandes ne sont pas équilibrées")
         return None
 
 
