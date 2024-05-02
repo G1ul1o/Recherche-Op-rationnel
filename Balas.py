@@ -43,7 +43,7 @@ def choisir_case(matrice, indices_max_ligne, indices_max_colonne, provisions, co
                 for j in range(len(matrice[i])-1):
                     if j not in colonne_banni:
                         cout_actuel = int(matrice[i][j])
-                        if cout_actuel < cout_minimum_ligne and min(provisions[i], commandes[j])>0:
+                        if cout_actuel < cout_minimum_ligne:
                             cout_minimum_ligne = cout_actuel
                             if provisions[i]< commandes[j]:
                                 direction = 'ligne'
@@ -116,33 +116,35 @@ def remplir_matrice_transport(matrice, provisions, commandes):
             indices_max_ligne, indices_max_colonne = trouver_penalite_maximale(penalites_lignes, penalites_colonnes)
             meilleur_choix = choisir_case(matrice, indices_max_ligne, indices_max_colonne, fixe_provisions, fixe_commandes, ligne_banni, colonne_banni)
             matrice_transport[meilleur_choix['ligne']][meilleur_choix['colonne']] = meilleur_choix['quantite']
-            if meilleur_choix['direction'] == 'ligne':
-                somme = 0
-                for i in range(nbr_C):
-                    if matrice_transport[meilleur_choix['ligne']][i] != -1:
-                        somme += matrice_transport[meilleur_choix['ligne']][i]
-                if somme == provisions[meilleur_choix['ligne']]:
-                    for i in range(nbr_C):
-                        if matrice_transport[meilleur_choix['ligne']][i] == -1 and i != meilleur_choix['colonne']:
 
-                            matrice_transport[meilleur_choix['ligne']][i] = 0
-                    ligne_banni.append(meilleur_choix['ligne'])
-            else:
-                somme = 0
-                for i in range(nbr_P):
-                    if matrice_transport[i][meilleur_choix['colonne']] != -1:
-                        somme += matrice_transport[i][meilleur_choix['colonne']]
-                if somme == commandes[meilleur_choix['colonne']]:
-                    for i in range(nbr_P):
-                        if matrice_transport[i][meilleur_choix['colonne']] == -1 and i != meilleur_choix['ligne']:
-                            matrice_transport[i][meilleur_choix['colonne']] = 0
-                    colonne_banni.append(meilleur_choix['colonne'])
+            for i in range(nbr_P):
+                if i not in ligne_banni:
+                    somme = 0
+                    for j in range(nbr_C):
+                        if matrice_transport[i][j] != -1:
+                            somme += matrice_transport[i][j]
+                    if somme == provisions[i]:
+                        for n in range(nbr_C):
+                            if matrice_transport[i][n] == -1:
+
+                                matrice_transport[i][n] = 0
+                        ligne_banni.append(i)
+
+            for i in range(nbr_C):
+                if i not in colonne_banni:
+                    somme = 0
+                    for j in range(nbr_P):
+                        if matrice_transport[j][i] != -1:
+                            somme += matrice_transport[j][i]
+                    if somme == commandes[i]:
+                        for n in range(nbr_P):
+                            if matrice_transport[n][i] == -1:
+
+                                matrice_transport[n][i] = 0
+                        colonne_banni.append(i)
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
-            print("Pénalités des lignes:", penalites_lignes)
-            print("Pénalités des colonnes:", penalites_colonnes)
-            print("Proposition de transport après modification (-1 sont des cases non rempli)")
 
 
     return matrice_transport

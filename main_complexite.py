@@ -233,6 +233,7 @@ if __name__ == '__main__':
                     duree = fin - debut
                     print(duree)
                     nuage_de_points.append(duree)
+                print("changement de taille")
                 tableau_de_valeurs.append(nuage_de_points)
 
     elif choix == 3 :
