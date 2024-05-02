@@ -173,10 +173,10 @@ if __name__ == '__main__':
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))
-    valeur_de_n = [10,50,100,200,400]
+    valeur_de_n = [10,50,100,150,200,400]
 
     if choix== 1:
-            tableau_de_valeurs=[]
+            tableau_de_valeurs_NO=[]
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
 
@@ -193,11 +193,11 @@ if __name__ == '__main__':
                     duree = fin - debut
                     nuage_de_points.append(duree)
                     print(duree)
-                tableau_de_valeurs.append(nuage_de_points)
+                tableau_de_valeurs_NO.append(nuage_de_points)
                 print("changement de taille")
 
     elif choix ==2 :
-            tableau_de_valeurs = []
+            tableau_de_valeurs_Balas = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
                 for i in range(50):
@@ -211,39 +211,48 @@ if __name__ == '__main__':
                     fin = time.process_time()
 
                     duree = fin - debut
-                    #print(duree)
+                    print(duree)
                     nuage_de_points.append(duree)
-                tableau_de_valeurs.append(nuage_de_points)
+                print("changement de taille")
+                tableau_de_valeurs_Balas.append(nuage_de_points)
 
     elif choix == 3 :
-            tableau_de_valeurs = []
+            tableau_de_valeurs_potentiels_avc_NO = []
+            tableau_de_valeurs_potentiels_et_NO = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
+                nuage_de_points_NO_potentials = []
                 for i in range(50):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
 
                     # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+                    debut_NO_potentiels = time.process_time()
                     matrice_NO = Nord_Ouest(matrice_cout_unitaire_aleatoire, taille_matrice, taille_matrice)
                     verif_degeneree(matrice_NO,taille_matrice)
 
                     debut = time.process_time()
                     methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
                     fin = time.process_time()
+                    fin_NO_potentiels =time.process_time()
 
 
                     duree = fin - debut
+                    duree_NO_potentiels= fin_NO_potentiels - debut_NO_potentiels
                     print(duree)
 
                     nuage_de_points.append(duree)
+                    nuage_de_points_NO_potentials(duree_NO_potentiels)
                 print("changement de taille")
-                tableau_de_valeurs.append(nuage_de_points)
+                tableau_de_valeurs_potentiels_avc_NO.append(nuage_de_points)
+                tableau_de_valeurs_potentiels_et_NO.append(nuage_de_points_NO_potentials)
 
     elif choix == 4 :
-            tableau_de_valeurs = []
-
+            tableau_de_valeurs_potentiels_avc_Balas = []
+            tableau_de_valeurs_potentiels_et_Balas = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
+                nuage_de_points_Balas_potentials = []
                 for i in range(50):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
@@ -251,40 +260,229 @@ if __name__ == '__main__':
                     commandes = [int(matrice_cout_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
 
                     # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-
+                    debut_Balas_potentiels = time.process_time()
                     proposition_de_transport = remplir_matrice_transport(matrice_cout_unitaire_aleatoire, provisions, commandes)
                     verif_degeneree(proposition_de_transport,taille_matrice)
+
                     debut = time.process_time()
                     methode_marche_avec_potentiels(proposition_de_transport, matrice_cout_unitaire_aleatoire, taille_matrice)
                     fin = time.process_time()
+                    fin_Balas_potentiels = time.process_time()
 
                     duree = fin - debut
+                    duree_Balas_potentiels = fin_Balas_potentiels - debut_Balas_potentiels
                     print(duree)
 
                     nuage_de_points.append(duree)
                 print("changement de taille")
-                tableau_de_valeurs.append(nuage_de_points)
+                tableau_de_valeurs_potentiels_avc_Balas.append(nuage_de_points)
+                tableau_de_valeurs_potentiels_et_Balas.append(nuage_de_points_Balas_potentials)
 
     # Données du tableau
     #categories = ['A', 'B', 'C', 'D']
     #valeurs = [10, 20, 15, 25]
     plot_valeurs=[]
     plot_tailles = []
+
+    valeur_complexité_pire_des_cas_NO = []
     for i in range(len(valeur_de_n)):
-        for j in range(len(tableau_de_valeurs[i])):
+        valeur_complexité_pire_des_cas_NO.append(max(tableau_de_valeurs_NO[i]))
+        for j in range(len(tableau_de_valeurs_NO[i])):
 
             plot_tailles.append(valeur_de_n[i])
 
-            plot_valeurs.append(tableau_de_valeurs[i][j])
+            plot_valeurs.append(tableau_de_valeurs_NO[i][j])
 
 
-    # change des couleurs
-    colors = ['blue' if x == 100 else 'red' if x == 200 else 'green'  for x in plot_valeurs]
     # Création du graphique de dispersion
-    plt.scatter(plot_tailles, plot_valeurs,c=plot_valeurs)
+    plt.scatter(plot_tailles, plot_valeurs,c=plot_tailles)
 
     # Ajouter des étiquettes et un titre
     plt.xlabel('Valeur de N')
     plt.ylabel('Temps')
-    plt.title('Complexité')
+    plt.title('Complexité NO')
+    plt.show()
+
+
+
+
+
+    plt.plot(valeur_de_n, valeur_complexité_pire_des_cas_NO)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title(
+        'Complexité pire des cas de NO')
+    plt.show()
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_complexité_pire_des_cas_Balas = []
+    for i in range(len(valeur_de_n)):
+        valeur_complexité_pire_des_cas_Balas.append(max(tableau_de_valeurs_Balas[i]))
+        for j in range(len(tableau_de_valeurs_Balas[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append(tableau_de_valeurs_Balas[i][j])
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+
+    # Ajouter des étiquettes et un titre
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité Balas')
+    plt.show()
+
+    plt.plot(plot_tailles, valeur_complexité_pire_des_cas_Balas)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title(
+        'Complexité pire des cas de Balas')
+    plt.show()
+
+
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_complexité_pire_des_cas_marche_pieds_avc_NO = []
+
+    for i in range(len(valeur_de_n)):
+        valeur_complexité_pire_des_cas_marche_pieds_avc_NO.append(max(tableau_de_valeurs_potentiels_avc_NO[i]))
+        for j in range(len(tableau_de_valeurs_potentiels_avc_NO[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append(tableau_de_valeurs_potentiels_avc_NO[i][j])
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+
+    # Ajouter des étiquettes et un titre
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité Methode du marche pieds avec proposition NO (uniquement temps du marche pieds)')
+    plt.show()
+
+    plt.plot(plot_tailles, valeur_complexité_pire_des_cas_marche_pieds_avc_NO)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title(
+        'Complexité pire des cas de la Methode du marche pieds avec proposition NO (uniquement temps du marche pieds)')
+    plt.show()
+
+
+
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_complexité_pire_des_cas_marche_pieds_avc_Balas = []
+    for i in range(len(valeur_de_n)):
+        valeur_complexité_pire_des_cas_marche_pieds_avc_Balas.append(max(tableau_de_valeurs_potentiels_avc_Balas[i]))
+        for j in range(len(tableau_de_valeurs_potentiels_avc_Balas[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append(tableau_de_valeurs_potentiels_avc_Balas[i][j])
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+
+    # Ajouter des étiquettes et un titre
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité Methode du marche pieds avec proposition Balas (uniquement temps du marche pieds)')
+    plt.show()
+
+    plt.plot(plot_tailles, valeur_complexité_pire_des_cas_marche_pieds_avc_Balas)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité pire des cas de la Methode du marche pieds avec proposition Balas (uniquement temps du marche pieds)')
+    plt.show()
+
+
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_complexité_pire_des_cas_potentiels_et_NO = []
+
+    for i in range(len(valeur_de_n)):
+        valeur_complexité_pire_des_cas_potentiels_et_NO.append(max(tableau_de_valeurs_potentiels_et_NO[i]))
+        for j in range(len(tableau_de_valeurs_potentiels_et_NO[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append(tableau_de_valeurs_potentiels_et_NO[i][j])
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+
+    # Ajouter des étiquettes et un titre
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité Methode du marche pieds avec proposition NO (temps total)')
+    plt.show()
+
+    plt.plot(plot_tailles, valeur_complexité_pire_des_cas_potentiels_et_NO)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité pire des cas de la Methode du marche pieds avec proposition NO (temps total)')
+    plt.show()
+
+
+
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_complexité_pire_des_cas_potentiels_et_Balas = []
+
+    for i in range(len(valeur_de_n)):
+        valeur_complexité_pire_des_cas_potentiels_et_Balas.append(max(tableau_de_valeurs_potentiels_et_Balas[i]))
+        for j in range(len(tableau_de_valeurs_potentiels_et_Balas[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append(tableau_de_valeurs_potentiels_et_Balas[i][j])
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+
+    # Ajouter des étiquettes et un titre
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité Methode du marche pieds avec proposition Balas (temps total)')
+    plt.show()
+
+    plt.plot(plot_tailles,valeur_complexité_pire_des_cas_potentiels_et_Balas)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Complexité pire des cas de la Methode du marche pieds avec proposition Balas (temps total)')
+    plt.show()
+
+
+
+    plot_valeurs = []
+    plot_tailles = []
+    valeur_comparaison_max = []
+
+    for i in range(len(valeur_de_n)):
+        for j in range(len(tableau_de_valeurs_potentiels_et_Balas[i])):
+            plot_tailles.append(valeur_de_n[i])
+
+            plot_valeurs.append((tableau_de_valeurs_potentiels_avc_NO[i][j]+tableau_de_valeurs_NO[i][j])/(tableau_de_valeurs_potentiels_avc_Balas[i][j]+tableau_de_valeurs_Balas[i][j]))
+
+    # Création du graphique de dispersion
+    plt.scatter(plot_tailles, plot_valeurs, c=plot_tailles)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Comparaison de complexité dans le pire des cas ')
+    plt.show()
+
+    for i in range (len(valeur_de_n)):
+        valeur_comparaison_max.append(plot_valeurs[i])
+
+    plt.plot(plot_tailles,valeur_comparaison_max)
+    plt.xlabel('Valeur de N')
+    plt.ylabel('Temps')
+    plt.title('Comparaison de complexité dans le pire des cas ')
     plt.show()
