@@ -173,14 +173,14 @@ if __name__ == '__main__':
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))
-    valeur_de_n = [10,20,100,200,400]
+    valeur_de_n = [10,50,100,200,400]
 
     if choix== 1:
             tableau_de_valeurs=[]
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
 
-                for i in range (100):
+                for i in range (50):
                     # Creation matrice aléatoire
 
                     matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
@@ -192,14 +192,15 @@ if __name__ == '__main__':
 
                     duree = fin - debut
                     nuage_de_points.append(duree)
-                #print(duree)
+                    print(duree)
                 tableau_de_valeurs.append(nuage_de_points)
+                print("changement de taille")
 
     elif choix ==2 :
             tableau_de_valeurs = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
-                for i in range(100):
+                for i in range(50):
 
                     matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
                     provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
@@ -218,14 +219,15 @@ if __name__ == '__main__':
             tableau_de_valeurs = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
-                for i in range(100):
+                for i in range(50):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
 
                     # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-                    debut = time.process_time()
                     matrice_NO = Nord_Ouest(matrice_cout_unitaire_aleatoire, taille_matrice, taille_matrice)
                     verif_degeneree(matrice_NO,taille_matrice)
+
+                    debut = time.process_time()
                     methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
                     fin = time.process_time()
 
@@ -242,23 +244,25 @@ if __name__ == '__main__':
 
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
-                for i in range(100):
+                for i in range(50):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
                     provisions = [int(matrice_cout_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
                     commandes = [int(matrice_cout_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
 
                     # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-                    debut = time.process_time()
+
                     proposition_de_transport = remplir_matrice_transport(matrice_cout_unitaire_aleatoire, provisions, commandes)
-                    verif_degeneree(proposition_de_transport)
+                    verif_degeneree(proposition_de_transport,taille_matrice)
+                    debut = time.process_time()
                     methode_marche_avec_potentiels(proposition_de_transport, matrice_cout_unitaire_aleatoire, taille_matrice)
                     fin = time.process_time()
 
                     duree = fin - debut
-                    #print(duree)
+                    print(duree)
 
                     nuage_de_points.append(duree)
+                print("changement de taille")
                 tableau_de_valeurs.append(nuage_de_points)
 
     # Données du tableau
@@ -282,5 +286,5 @@ if __name__ == '__main__':
     # Ajouter des étiquettes et un titre
     plt.xlabel('Valeur de N')
     plt.ylabel('Temps')
-    plt.title('Graphe à barres')
+    plt.title('Complexité')
     plt.show()
