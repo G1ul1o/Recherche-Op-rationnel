@@ -1,0 +1,176 @@
+Entrez le numéro du fichier que vous voulez tester:5
+La matrice des couts est :
+┍━━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━┑
+│           │   C1 │   C2 │   C3 │   Commande │
+┝━━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │    5 │    7 │    8 │         25 │
+│ P2        │    6 │    8 │    5 │         25 │
+│ P3        │    6 │    7 │    7 │         25 │
+│ Provision │   35 │   20 │   20 │            │
+┕━━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━┙
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix : 3
+┍━━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━┑
+│           │   C1 │   C2 │   C3 │   Commande │
+┝━━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │    5 │    7 │    8 │         25 │
+│ P2        │    6 │    8 │    5 │         25 │
+│ P3        │    6 │    7 │    7 │         25 │
+│ Provision │   35 │   20 │   20 │            │
+┕━━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━┙
+On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :
+
+Les propositions et les commandes sont équilibrées
+La matrice avec la méthode de Nord-Ouest est :
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [10, 6] │ [15, 8] │ [0, 5]  │         25 │
+│ P3        │ [0, 6]  │ [5, 7]  │ [20, 7] │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+
+Cette proposition de transport est acyclique
+
+Ce graphe est  connexe car le nombre d'arrête ( 5 ) est égal  au nombre de sommet ( 6 ) - 1 soit ici: 5
+Le graph est connexe
+Proposition de transport
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [10, 6] │ [15, 8] │ [0, 5]  │         25 │
+│ P3        │ [0, 6]  │ [5, 7]  │ [20, 7] │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    5 │    7 │    7 │
+│ P2  │    6 │    8 │    8 │
+│ P3  │    5 │    7 │    7 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │    0 │    1 │
+│ P2  │    0 │    0 │   -3 │
+│ P3  │    1 │    0 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+L'arrête ['P2', 'C3'] a un coût marginal négatif on l'ajoute donc a notre graphe
+Presence d'un cycle
+Proposition de transport après maximisation de l'arrête
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [10, 6] │ [-5, 8] │ [20, 5] │         25 │
+│ P3        │ [0, 6]  │ [25, 7] │ [0, 7]  │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+Ce graphe est  connexe car le nombre d'arrête ( 5 ) est égal  au nombre de sommet ( 6 ) - 1 soit ici: 5
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    5 │    7 │    4 │
+│ P2  │    6 │    8 │    5 │
+│ P3  │    5 │    7 │    4 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │    0 │    4 │
+│ P2  │    0 │    0 │    0 │
+│ P3  │    1 │    0 │    3 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La solution proposé est optimale
+Proposotion finale:
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [10, 6] │ [-5, 8] │ [20, 5] │         25 │
+│ P3        │ [0, 6]  │ [25, 7] │ [0, 7]  │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix : 4
+┍━━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━┑
+│           │   C1 │   C2 │   C3 │   Commande │
+┝━━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │    5 │    7 │    8 │         25 │
+│ P2        │    6 │    8 │    5 │         25 │
+│ P3        │    6 │    7 │    7 │         25 │
+│ Provision │   35 │   20 │   20 │            │
+┕━━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━┙
+On va créer une proposition de transport de la proposition selectionné avec la méthode de Balas-Hammer :
+
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [5, 6]  │ [0, 8]  │ [20, 5] │         25 │
+│ P3        │ [5, 6]  │ [20, 7] │ [0, 7]  │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+Cette proposition de transport est acyclique
+
+Ce graphe est  connexe car le nombre d'arrête ( 5 ) est égal  au nombre de sommet ( 6 ) - 1 soit ici: 5
+Le graph est connexe
+Proposition de transport
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [5, 6]  │ [0, 8]  │ [20, 5] │         25 │
+│ P3        │ [5, 6]  │ [20, 7] │ [0, 7]  │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    5 │    6 │    4 │
+│ P2  │    6 │    7 │    5 │
+│ P3  │    6 │    7 │    5 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │    1 │    4 │
+│ P2  │    0 │    1 │    0 │
+│ P3  │    0 │    0 │    2 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La solution proposé est optimale
+Proposotion finale:
+┍━━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━┑
+│           │ C1      │ C2      │ C3      │   Commande │
+┝━━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━┥
+│ P1        │ [25, 5] │ [0, 7]  │ [0, 8]  │         25 │
+│ P2        │ [5, 6]  │ [0, 8]  │ [20, 5] │         25 │
+│ P3        │ [5, 6]  │ [20, 7] │ [0, 7]  │         25 │
+│ Provision │ 35      │ 20      │ 20      │         75 │
+┕━━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━┙
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix :
