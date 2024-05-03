@@ -82,35 +82,8 @@ def methode_marche_avec_potentiels(proposition_de_transport,matrice_cout_unitair
                         sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice_cout_unitaire_aleatoire, graph)
 
                     if sigma_0 == True:
+                        #On ne traine pas le problème de sigma = 0
                         presence_arrete_negative = False
-                    '''if sigma_0 == True:
-                        print("sigma")
-                        sigma_0_connexe(sommet_ajouter_connexe,graph)
-                        print("Les sous graphes connexes composant la proposition sont : ")
-                        print()
-
-                        sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
-                        for indice_print in range(len(sous_graphes_connexes)):
-                            print("Le sous graphe numéro", indice_print + 1, "est composant des sommets :",
-                                  sous_graphes_connexes[indice_print])
-                        print()
-                        sommet_ajouter_connexe_sigma = graphe_connexe(sous_graphes_connexes, matrice, graph)
-                        print(sommet_ajouter_connexe_sigma)
-                        for i in range (len(graph)):
-                            print(graph[i].nom_sommet,graph[i].liaison)'''
-
-                '''if sigma_0==True:
-                    print("sigma")
-                    sigma_0_connexe(sommet_ajouter_connexe_sigma, graph)
-                    sous_graphes_connexes = recherche_des_sous_graphes_connexes(graph, nbr_P)
-                    for indice_print in range(len(sous_graphes_connexes)):
-                        print("Le sous graphe numéro", indice_print + 1, "est composant des sommets :",
-                              sous_graphes_connexes[indice_print])
-                    sommet_ajouter_connexe_sigma = graphe_connexe_sigma(sous_graphes_connexes, proposition_de_transport,graph,sommet_ajouter_connexe_sigma)
-                    input()
-                    print(sommet_ajouter_connexe_sigma)
-                    for i in range(len(graph)):
-                        print(graph[i].nom_sommet, graph[i].liaison)'''
 
         continuer= False
 
@@ -174,13 +147,13 @@ if __name__ == '__main__':
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))
     valeur_de_n = [10,50,100,150,200,400]
-
+    nb_test = 25
     if choix== 1:
             tableau_de_valeurs_NO=[]
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
 
-                for i in range (50):
+                for i in range (nb_test):
                     # Creation matrice aléatoire
 
                     matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
@@ -200,7 +173,7 @@ if __name__ == '__main__':
             tableau_de_valeurs_Balas = []
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
-                for i in range(50):
+                for i in range(nb_test):
 
                     matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
                     provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
@@ -222,7 +195,7 @@ if __name__ == '__main__':
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
                 nuage_de_points_NO_potentials = []
-                for i in range(50):
+                for i in range(nb_test):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
 
@@ -253,7 +226,7 @@ if __name__ == '__main__':
             for taille_matrice in valeur_de_n:
                 nuage_de_points = []
                 nuage_de_points_Balas_potentials = []
-                for i in range(50):
+                for i in range(nb_test):
                     # Creation matrice aléatoire
                     matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
                     provisions = [int(matrice_cout_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
