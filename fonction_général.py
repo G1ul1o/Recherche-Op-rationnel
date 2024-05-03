@@ -69,8 +69,8 @@ def affichage_proposition_de_transport(matrice,matrice_avec_nbr_de_commande,nbr_
     #Ligne des provisions
     ligne = []
     ligne.append("Provision")
-    for j in range (nbr_C):
-        ligne.append(matrice[nbr_P][j])
+    for j in range (nbr_C+1):
+        ligne.append(matrice_avec_nbr_de_commande[nbr_P][j])
     data.append(ligne)
 
     headers = [" "]
