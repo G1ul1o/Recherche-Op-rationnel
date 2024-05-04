@@ -124,13 +124,15 @@ def methode_marche_avec_potentiels(proposition_de_transport):
             affichage_couts_potentiels_marginaux(matrice_cout_marginaux, nbr_C, nbr_P)
 
             presence_arrete_negative, arrete_a_ajouter = selection_arrete_maximisé(matrice_cout_marginaux, graph)
-
+            if presence_arrete_negative == True:
+                print("Nous avons l'arrête",arrete_a_ajouter, "qui a un coût marginal on l'ajoute comme arrête fictive")
             absence_de_cycle = False
             while absence_de_cycle == False:
 
                 absence_de_cycle, cycle = verif_cycle(graph)
                 if absence_de_cycle == False:
                     print("Presence d'un cycle")
+                    print(cycle)
                     sigma_0=Maximisation(graph,cycle, proposition_de_transport, arrete_a_ajouter, nbr_C, nbr_P)
                     print("Proposition de transport après maximisation de l'arrête")
                     affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)

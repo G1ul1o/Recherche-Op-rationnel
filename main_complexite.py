@@ -140,116 +140,116 @@ def generation_matrice_aleatoire(taille_matrice):
 
 if __name__ == '__main__':
 
-    choix = int(input("Que souhaitez-vous faire ?\n"
+    '''choix = int(input("Que souhaitez-vous faire ?\n"
                       "1. Afficher la matrice de transport avec la méthode de Nord Ouest\n"
                       "2. Afficher la matrice de transport avec Balas\n"
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
-                      "Entrez votre choix : "))
+                      "Entrez votre choix : "))'''
     valeur_de_n = [10,50,100,150,200,400]
     nb_test = 25
-    if choix== 1:
-            tableau_de_valeurs_NO=[]
-            for taille_matrice in valeur_de_n:
-                nuage_de_points = []
 
-                for i in range (nb_test):
-                    # Creation matrice aléatoire
+    tableau_de_valeurs_NO=[]
+    for taille_matrice in valeur_de_n:
+        nuage_de_points = []
 
-                    matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+        for i in range (nb_test):
+            # Creation matrice aléatoire
 
-                    #time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-                    debut = time.process_time()
-                    matrice_NO = Nord_Ouest(matrice_prix_unitaire_aleatoire, taille_matrice, taille_matrice)
-                    fin = time.process_time()
+            matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
 
-                    duree = fin - debut
-                    nuage_de_points.append(duree)
-                    print(duree)
-                tableau_de_valeurs_NO.append(nuage_de_points)
-                print("changement de taille")
+            #time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+            debut = time.process_time()
+            matrice_NO = Nord_Ouest(matrice_prix_unitaire_aleatoire, taille_matrice, taille_matrice)
+            fin = time.process_time()
 
-    elif choix ==2 :
-            tableau_de_valeurs_Balas = []
-            for taille_matrice in valeur_de_n:
-                nuage_de_points = []
-                for i in range(nb_test):
-
-                    matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
-                    provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
-                    commandes = [int(matrice_prix_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
-
-                    debut = time.process_time()
-                    matrice_de_transport = remplir_matrice_transport(matrice_prix_unitaire_aleatoire, provisions, commandes)
-                    fin = time.process_time()
-
-                    duree = fin - debut
-                    print(duree)
-                    nuage_de_points.append(duree)
-                print("changement de taille")
-                tableau_de_valeurs_Balas.append(nuage_de_points)
-
-    elif choix == 3 :
-            tableau_de_valeurs_potentiels_avc_NO = []
-            tableau_de_valeurs_potentiels_et_NO = []
-            for taille_matrice in valeur_de_n:
-                nuage_de_points = []
-                nuage_de_points_NO_potentials = []
-                for i in range(nb_test):
-                    # Creation matrice aléatoire
-                    matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
-
-                    # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-                    debut_NO_potentiels = time.process_time()
-                    matrice_NO = Nord_Ouest(matrice_cout_unitaire_aleatoire, taille_matrice, taille_matrice)
-                    verif_degeneree(matrice_NO,taille_matrice)
-
-                    debut = time.process_time()
-                    methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
-                    fin = time.process_time()
-                    fin_NO_potentiels =time.process_time()
+            duree = fin - debut
+            nuage_de_points.append(duree)
+            print(duree)
+        tableau_de_valeurs_NO.append(nuage_de_points)
+        print("changement de taille")
 
 
-                    duree = fin - debut
-                    duree_NO_potentiels= fin_NO_potentiels - debut_NO_potentiels
-                    print(duree)
+    tableau_de_valeurs_Balas = []
+    for taille_matrice in valeur_de_n:
+        nuage_de_points = []
+        for i in range(nb_test):
 
-                    nuage_de_points.append(duree)
-                    nuage_de_points_NO_potentials(duree_NO_potentiels)
-                print("changement de taille")
-                tableau_de_valeurs_potentiels_avc_NO.append(nuage_de_points)
-                tableau_de_valeurs_potentiels_et_NO.append(nuage_de_points_NO_potentials)
+            matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+            provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
+            commandes = [int(matrice_prix_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
 
-    elif choix == 4 :
-            tableau_de_valeurs_potentiels_avc_Balas = []
-            tableau_de_valeurs_potentiels_et_Balas = []
-            for taille_matrice in valeur_de_n:
-                nuage_de_points = []
-                nuage_de_points_Balas_potentials = []
-                for i in range(nb_test):
-                    # Creation matrice aléatoire
-                    matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
-                    provisions = [int(matrice_cout_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
-                    commandes = [int(matrice_cout_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
+            debut = time.process_time()
+            matrice_de_transport = remplir_matrice_transport(matrice_prix_unitaire_aleatoire, provisions, commandes)
+            fin = time.process_time()
 
-                    # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
-                    debut_Balas_potentiels = time.process_time()
-                    proposition_de_transport = remplir_matrice_transport(matrice_cout_unitaire_aleatoire, provisions, commandes)
-                    verif_degeneree(proposition_de_transport,taille_matrice)
+            duree = fin - debut
+            print(duree)
+            nuage_de_points.append(duree)
+        print("changement de taille")
+        tableau_de_valeurs_Balas.append(nuage_de_points)
 
-                    debut = time.process_time()
-                    methode_marche_avec_potentiels(proposition_de_transport, matrice_cout_unitaire_aleatoire, taille_matrice)
-                    fin = time.process_time()
-                    fin_Balas_potentiels = time.process_time()
 
-                    duree = fin - debut
-                    duree_Balas_potentiels = fin_Balas_potentiels - debut_Balas_potentiels
-                    print(duree)
+    tableau_de_valeurs_potentiels_avc_NO = []
+    tableau_de_valeurs_potentiels_et_NO = []
+    for taille_matrice in valeur_de_n:
+        nuage_de_points = []
+        nuage_de_points_NO_potentials = []
+        for i in range(nb_test):
+            # Creation matrice aléatoire
+            matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
 
-                    nuage_de_points.append(duree)
-                print("changement de taille")
-                tableau_de_valeurs_potentiels_avc_Balas.append(nuage_de_points)
-                tableau_de_valeurs_potentiels_et_Balas.append(nuage_de_points_Balas_potentials)
+            # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+            debut_NO_potentiels = time.process_time()
+            matrice_NO = Nord_Ouest(matrice_cout_unitaire_aleatoire, taille_matrice, taille_matrice)
+            verif_degeneree(matrice_NO,taille_matrice)
+
+            debut = time.process_time()
+            methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
+            fin = time.process_time()
+            fin_NO_potentiels =time.process_time()
+
+
+            duree = fin - debut
+            duree_NO_potentiels= fin_NO_potentiels - debut_NO_potentiels
+            print(duree)
+
+            nuage_de_points.append(duree)
+            nuage_de_points_NO_potentials.append(duree_NO_potentiels)
+        print("changement de taille")
+        tableau_de_valeurs_potentiels_avc_NO.append(nuage_de_points)
+        tableau_de_valeurs_potentiels_et_NO.append(nuage_de_points_NO_potentials)
+
+
+    tableau_de_valeurs_potentiels_avc_Balas = []
+    tableau_de_valeurs_potentiels_et_Balas = []
+    for taille_matrice in valeur_de_n:
+        nuage_de_points = []
+        nuage_de_points_Balas_potentials = []
+        for i in range(nb_test):
+            # Creation matrice aléatoire
+            matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+            provisions = [int(matrice_cout_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
+            commandes = [int(matrice_cout_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
+
+            # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+            debut_Balas_potentiels = time.process_time()
+            proposition_de_transport = remplir_matrice_transport(matrice_cout_unitaire_aleatoire, provisions, commandes)
+            verif_degeneree(proposition_de_transport,taille_matrice)
+
+            debut = time.process_time()
+            methode_marche_avec_potentiels(proposition_de_transport, matrice_cout_unitaire_aleatoire, taille_matrice)
+            fin = time.process_time()
+            fin_Balas_potentiels = time.process_time()
+
+            duree = fin - debut
+            duree_Balas_potentiels = fin_Balas_potentiels - debut_Balas_potentiels
+            print(duree)
+
+            nuage_de_points.append(duree)
+        print("changement de taille")
+        tableau_de_valeurs_potentiels_avc_Balas.append(nuage_de_points)
+        tableau_de_valeurs_potentiels_et_Balas.append(nuage_de_points_Balas_potentials)
 
     # Données du tableau
     #categories = ['A', 'B', 'C', 'D']

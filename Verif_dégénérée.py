@@ -189,16 +189,19 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
                 case_cycle.append(int(''.join([caractere for caractere in cycle_organise[i +1] if caractere.isdigit()]))-1)
                 composition_cycle.append(case_cycle)
 
-    minimum_ligne = -1
+    a_compenser = -1
 
 
     pair = 0
+
     for case_cycle in composition_cycle:
+
         if pair %2 != 0:   #on récupère les impairs
-            if minimum_ligne == -1:
+            if a_compenser == -1:
                 a_compenser = propositon_de_transport[case_cycle[0]][case_cycle[1]]
             else:
-                a_compenser = min(propositon_de_transport[case_cycle[0]][case_cycle[1]], minimum_ligne)
+                a_compenser = min(propositon_de_transport[case_cycle[0]][case_cycle[1]], a_compenser)
+
         pair +=1
 
 
