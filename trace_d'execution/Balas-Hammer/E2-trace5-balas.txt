@@ -1,0 +1,75 @@
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix : 4
+┍━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━━┑
+│          │   C1 │   C2 │   C3 │   Provision │
+┝━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │    5 │    7 │    8 │          25 │
+│ P2       │    6 │    8 │    5 │          25 │
+│ P3       │    6 │    7 │    7 │          25 │
+│ Commande │   35 │   20 │   20 │             │
+┕━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━━┙
+On va créer une proposition de transport de la proposition selectionné avec la méthode de Balas-Hammer :
+
+Les Pénalités des lignes: [2, 1, 1]
+Les Pénalités des colonnes: [1, 0, 2]
+Les Pénalités des lignes: [-1, 1, 1]
+Les Pénalités des colonnes: [0, 1, 2]
+Les Pénalités des lignes: [-1, 2, 1]
+Les Pénalités des colonnes: [0, 1, -1]
+Les Pénalités des lignes: [-1, -1, 1]
+Les Pénalités des colonnes: [0, 0, -1]
+Les Pénalités des lignes: [-1, -1, 0]
+Les Pénalités des colonnes: [-1, 0, -1]
+┍━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1      │ C2      │ C3      │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [25, 5] │ [0, 7]  │ [0, 8]  │          25 │
+│ P2       │ [5, 6]  │ [0, 8]  │ [20, 5] │          25 │
+│ P3       │ [5, 6]  │ [20, 7] │ [0, 7]  │          25 │
+│ Commande │ 35      │ 20      │ 20      │          75 │
+┕━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━┙
+Cette proposition de transport est acyclique
+
+Ce graphe est  connexe car le nombre d'arrête ( 5 ) est égal  au nombre de sommet ( 6 ) - 1 soit ici: 5
+
+Le graph est connexe
+Proposition de transport
+┍━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1      │ C2      │ C3      │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [25, 5] │ [0, 7]  │ [0, 8]  │          25 │
+│ P2       │ [5, 6]  │ [0, 8]  │ [20, 5] │          25 │
+│ P3       │ [5, 6]  │ [20, 7] │ [0, 7]  │          25 │
+│ Commande │ 35      │ 20      │ 20      │          75 │
+┕━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━┙
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    5 │    6 │    4 │
+│ P2  │    6 │    7 │    5 │
+│ P3  │    6 │    7 │    5 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │    1 │    4 │
+│ P2  │    0 │    1 │    0 │
+│ P3  │    0 │    0 │    2 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La solution proposé est optimale
+Proposotion finale:
+┍━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1      │ C2      │ C3      │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [25, 5] │ [0, 7]  │ [0, 8]  │          25 │
+│ P2       │ [5, 6]  │ [0, 8]  │ [20, 5] │          25 │
+│ P3       │ [5, 6]  │ [20, 7] │ [0, 7]  │          25 │
+│ Commande │ 35      │ 20      │ 20      │          75 │
+┕━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━┙

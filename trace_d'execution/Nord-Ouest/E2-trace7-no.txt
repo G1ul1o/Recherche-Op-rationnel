@@ -1,0 +1,138 @@
+Entrez le numéro du fichier que vous voulez tester:7
+La matrice des couts est :
+┍━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━━┑
+│          │   C1 │   C2 │   Provision │
+┝━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │   50 │   20 │         100 │
+│ P2       │   10 │   50 │         200 │
+│ P3       │   50 │   40 │         100 │
+│ P4       │   45 │   35 │         200 │
+│ Commande │  300 │  300 │             │
+┕━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━━┙
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix : 3
+┍━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━━┑
+│          │   C1 │   C2 │   Provision │
+┝━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │   50 │   20 │         100 │
+│ P2       │   10 │   50 │         200 │
+│ P3       │   50 │   40 │         100 │
+│ P4       │   45 │   35 │         200 │
+│ Commande │  300 │  300 │             │
+┕━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━━┙
+On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :
+
+Les propositions et les commandes sont équilibrées
+La matrice avec la méthode de Nord-Ouest est :
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 50] │ [0, 20]   │         100 │
+│ P2       │ [200, 10] │ [0, 50]   │         200 │
+│ P3       │ [0, 50]   │ [100, 40] │         100 │
+│ P4       │ [0, 45]   │ [200, 35] │         200 │
+│ Commande │ 300       │ 300       │         600 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+
+Cette proposition de transport est acyclique
+
+Ce graphe n'est connexe pas car le nombre d'arrête ( 2 ) n'est pas égal au nombre de sommet ( 6 ) - 1 soit ici: 5
+
+Les sous graphes connexes composant la proposition sont :
+
+Le sous graphe numéro 1 est composé des sommets : ['P1', 'C1', 'P2']
+Le sous graphe numéro 2 est composé des sommets : ['P3', 'C2', 'P4']
+
+Ajout de la liaison C2 P1 pour rendre notre gaphe connexe
+
+Cette proposition de transport est acyclique
+
+Ce graphe est  connexe car le nombre d'arrête ( 5 ) est égal  au nombre de sommet ( 6 ) - 1 soit ici: 5
+
+Le graph est connexe
+Proposition de transport
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 50] │ [0, 20]   │         100 │
+│ P2       │ [200, 10] │ [0, 50]   │         200 │
+│ P3       │ [0, 50]   │ [100, 40] │         100 │
+│ P4       │ [0, 45]   │ [200, 35] │         200 │
+│ Commande │ 300       │ 300       │         600 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │
+┝━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   50 │   20 │
+│ P2  │   10 │  -20 │
+│ P3  │   70 │   40 │
+│ P4  │   65 │   35 │
+┕━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │
+┝━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │    0 │
+│ P2  │    0 │   70 │
+│ P3  │  -20 │    0 │
+│ P4  │  -20 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┙
+L'arrête ['P3', 'C1'] a un coût marginal négatif on l'ajoute donc a notre graphe
+Nous avons l'arrête ['P3', 'C1'] qui a un coût marginal on l'ajoute comme arrête fictive
+Presence d'un cycle
+Le cycle est : ['C1', 'P3', 'C2', 'P1', 'C1']
+Proposition de transport après maximisation de l'arrête
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [0, 50]   │ [100, 20] │         100 │
+│ P2       │ [200, 10] │ [0, 50]   │         200 │
+│ P3       │ [100, 50] │ [0, 40]   │         100 │
+│ P4       │ [0, 45]   │ [200, 35] │         200 │
+│ Commande │ 300       │ 300       │         600 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+Ce graphe n'est connexe pas car le nombre d'arrête ( 2 ) n'est pas égal au nombre de sommet ( 6 ) - 1 soit ici: 5
+
+Les sous graphes connexes composant la proposition sont :
+
+Le sous graphe numéro 1 est composé des sommets : ['P1', 'C2', 'P4']
+Le sous graphe numéro 2 est composé des sommets : ['P2', 'C1', 'P3']
+
+Ajout de la liaison C2 P3 pour rendre notre gaphe connexe
+
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │
+┝━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   30 │   20 │
+│ P2  │   10 │    0 │
+│ P3  │   50 │   40 │
+│ P4  │   45 │   35 │
+┕━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │
+┝━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   20 │    0 │
+│ P2  │    0 │   50 │
+│ P3  │    0 │    0 │
+│ P4  │    0 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┙
+La solution proposé est optimale
+Proposotion finale:
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [0, 50]   │ [100, 20] │         100 │
+│ P2       │ [200, 10] │ [0, 50]   │         200 │
+│ P3       │ [100, 50] │ [0, 40]   │         100 │
+│ P4       │ [0, 45]   │ [200, 35] │         200 │
+│ Commande │ 300       │ 300       │         600 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
