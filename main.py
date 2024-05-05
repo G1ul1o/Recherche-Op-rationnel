@@ -208,52 +208,29 @@ if __name__ == '__main__':
     choix = 1
 
     while continuer:
+        if choix == 1:
+            lire_fichier()
+        elif choix == 2:
+            continuer = False
 
-        match choix :
-            
-            case 1:
-                lire_fichier()
-            case 2:
-                continuer = False
+        elif choix == 3:
+            afficher_matrices()
+            Methode_NO()
 
-            case 3:
-                afficher_matrices()
-                Methode_NO()
+            if matrice_NO!=None:
                 verif_degeneree(matrice_NO)
                 methode_marche_avec_potentiels(matrice_NO)
                 print("Proposotion finale:")
                 affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
 
-                calcul = input("Voulez vous faire le calcul du cout total ? (Y)\n")
-                match calcul:
-                    case "Y":
-                        calcul_des_couts(matrice, matrice_NO, nbr_C,nbr_P)
-                    case _:
-                        matrice
 
-
-                          
-
-
-            case 4:
-                afficher_matrices()
-                Methode_Balas()
-                verif_degeneree(matrice_de_transport)
-                methode_marche_avec_potentiels(matrice_de_transport)
-                print("Proposotion finale:")
-                affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
-                calcul = input("Voulez vous faire le calcul du cout total ? (Y)\n")
-                match calcul:
-                    case "Y":
-                        calcul_des_couts(matrice, matrice_de_transport, nbr_C, nbr_P)
-                    case _:
-                        matrice
-            case _:
-                ## default case
-                print("Veuillez choisir une option valide (1,2,3 ou 4)\n")
-                
-                
-
+        elif choix ==4:
+            afficher_matrices()
+            Methode_Balas()
+            verif_degeneree(matrice_de_transport)
+            methode_marche_avec_potentiels(matrice_de_transport)
+            print("Proposotion finale:")
+            affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
 
         if continuer == True:
             choix = int(input("Que souhaitez-vous faire ?\n"
