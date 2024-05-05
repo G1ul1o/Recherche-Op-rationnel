@@ -1,0 +1,240 @@
+Entrez le numéro du fichier que vous voulez tester:9
+La matrice des couts est :
+┍━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━━┑
+│          │   C1 │   C2 │   C3 │   Provision │
+┝━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │   30 │   20 │   15 │         100 │
+│ P2       │   10 │   50 │    2 │         100 │
+│ P3       │    9 │   10 │   30 │         100 │
+│ P4       │    6 │    2 │   29 │         100 │
+│ P5       │   50 │   40 │    3 │         100 │
+│ P6       │    5 │   38 │   27 │         100 │
+│ P7       │   50 │    4 │   22 │         100 │
+│ Commande │  400 │  200 │  100 │             │
+┕━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━━┙
+Que souhaitez-vous faire ?
+1. Changer de fichier
+2. Quitter
+3. Afficher la matrice de transport avec la méthode de Nord Ouest
+4. Afficher la matrice de transport avec Balas
+Entrez votre choix : 3
+┍━━━━━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┯━━━━━━━━━━━━━┑
+│          │   C1 │   C2 │   C3 │   Provision │
+┝━━━━━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │   30 │   20 │   15 │         100 │
+│ P2       │   10 │   50 │    2 │         100 │
+│ P3       │    9 │   10 │   30 │         100 │
+│ P4       │    6 │    2 │   29 │         100 │
+│ P5       │   50 │   40 │    3 │         100 │
+│ P6       │    5 │   38 │   27 │         100 │
+│ P7       │   50 │    4 │   22 │         100 │
+│ Commande │  400 │  200 │  100 │             │
+┕━━━━━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┷━━━━━━━━━━━━━┙
+On va créer une proposition de transport de la proposition selectionné avec la méthode de Nord-Ouest :
+
+Les propositions et les commandes sont équilibrées
+La matrice avec la méthode de Nord-Ouest est :
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │ C3        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]   │ [0, 15]   │         100 │
+│ P2       │ [100, 10] │ [0, 50]   │ [0, 2]    │         100 │
+│ P3       │ [100, 9]  │ [0, 10]   │ [0, 30]   │         100 │
+│ P4       │ [100, 6]  │ [0, 2]    │ [0, 29]   │         100 │
+│ P5       │ [0, 50]   │ [100, 40] │ [0, 3]    │         100 │
+│ P6       │ [0, 5]    │ [100, 38] │ [0, 27]   │         100 │
+│ P7       │ [0, 50]   │ [0, 4]    │ [100, 22] │         100 │
+│ Commande │ 400       │ 200       │ 100       │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+
+Cette proposition de transport est acyclique
+
+Ce graphe n'est connexe pas car le nombre d'arrête ( 4 ) n'est pas égal au nombre de sommet ( 10 ) - 1 soit ici: 9
+
+Les sous graphes connexes composant la proposition sont :
+
+Le sous graphe numéro 1 est composé des sommets : ['P1', 'C1', 'P2', 'P3', 'P4']
+Le sous graphe numéro 2 est composé des sommets : ['P5', 'C2', 'P6']
+Le sous graphe numéro 3 est composé des sommets : ['P7', 'C3']
+
+Ajout de la liaison C2 P4 pour rendre notre gaphe connexe
+
+Ajout de la liaison C3 P2 pour rendre notre gaphe connexe
+
+Cette proposition de transport est acyclique
+
+Ce graphe est  connexe car le nombre d'arrête ( 9 ) est égal  au nombre de sommet ( 10 ) - 1 soit ici: 9
+
+Le graph est connexe
+Proposition de transport
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │ C3        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]   │ [0, 15]   │         100 │
+│ P2       │ [100, 10] │ [0, 50]   │ [0, 2]    │         100 │
+│ P3       │ [100, 9]  │ [0, 10]   │ [0, 30]   │         100 │
+│ P4       │ [100, 6]  │ [0, 2]    │ [0, 29]   │         100 │
+│ P5       │ [0, 50]   │ [100, 40] │ [0, 3]    │         100 │
+│ P6       │ [0, 5]    │ [100, 38] │ [0, 27]   │         100 │
+│ P7       │ [0, 50]   │ [0, 4]    │ [100, 22] │         100 │
+│ Commande │ 400       │ 200       │ 100       │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   30 │   26 │   22 │
+│ P2  │   10 │    6 │    2 │
+│ P3  │    9 │    5 │    1 │
+│ P4  │    6 │    2 │   -2 │
+│ P5  │   44 │   40 │   36 │
+│ P6  │   42 │   38 │   34 │
+│ P7  │   30 │   26 │   22 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │   -6 │   -7 │
+│ P2  │    0 │   44 │    0 │
+│ P3  │    0 │    5 │   29 │
+│ P4  │    0 │    0 │   31 │
+│ P5  │    6 │    0 │  -33 │
+│ P6  │  -37 │    0 │   -7 │
+│ P7  │   20 │  -22 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+L'arrête ['P6', 'C1'] a un coût marginal négatif on l'ajoute donc a notre graphe
+Nous avons l'arrête ['P6', 'C1'] qui a un coût marginal on l'ajoute comme arrête fictive
+Presence d'un cycle
+Le cycle est : ['C1', 'P6', 'C2', 'P4', 'C1']
+Proposition de transport après maximisation de l'arrête
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2        │ C3        │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]   │ [0, 15]   │         100 │
+│ P2       │ [100, 10] │ [0, 50]   │ [0, 2]    │         100 │
+│ P3       │ [100, 9]  │ [0, 10]   │ [0, 30]   │         100 │
+│ P4       │ [0, 6]    │ [100, 2]  │ [0, 29]   │         100 │
+│ P5       │ [0, 50]   │ [100, 40] │ [0, 3]    │         100 │
+│ P6       │ [100, 5]  │ [0, 38]   │ [0, 27]   │         100 │
+│ P7       │ [0, 50]   │ [0, 4]    │ [100, 22] │         100 │
+│ Commande │ 400       │ 200       │ 100       │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+Ce graphe n'est connexe pas car le nombre d'arrête ( 6 ) n'est pas égal au nombre de sommet ( 10 ) - 1 soit ici: 9
+
+Les sous graphes connexes composant la proposition sont :
+
+Le sous graphe numéro 1 est composé des sommets : ['P1', 'C1', 'P2', 'C3', 'P7', 'P3', 'P6']
+Le sous graphe numéro 2 est composé des sommets : ['P4', 'C2', 'P5']
+
+Ajout de la liaison C3 P5 pour rendre notre gaphe connexe
+
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   30 │   59 │   22 │
+│ P2  │   10 │   39 │    2 │
+│ P3  │    9 │   38 │    1 │
+│ P4  │  -27 │    2 │  -35 │
+│ P5  │   11 │   40 │    3 │
+│ P6  │    5 │   34 │   -3 │
+│ P7  │   30 │   59 │   22 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │  -39 │   -7 │
+│ P2  │    0 │   11 │    0 │
+│ P3  │    0 │  -28 │   29 │
+│ P4  │   33 │    0 │   64 │
+│ P5  │   39 │    0 │    0 │
+│ P6  │    0 │    4 │   30 │
+│ P7  │   20 │  -55 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+L'arrête ['P7', 'C2'] a un coût marginal négatif on l'ajoute donc a notre graphe
+Nous avons l'arrête ['P7', 'C2'] qui a un coût marginal on l'ajoute comme arrête fictive
+Presence d'un cycle
+Le cycle est : ['C2', 'P7', 'C3', 'P5', 'C2']
+Proposition de transport après maximisation de l'arrête
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2       │ C3       │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]  │ [0, 15]  │         100 │
+│ P2       │ [100, 10] │ [0, 50]  │ [0, 2]   │         100 │
+│ P3       │ [100, 9]  │ [0, 10]  │ [0, 30]  │         100 │
+│ P4       │ [0, 6]    │ [100, 2] │ [0, 29]  │         100 │
+│ P5       │ [0, 50]   │ [0, 40]  │ [100, 3] │         100 │
+│ P6       │ [100, 5]  │ [0, 38]  │ [0, 27]  │         100 │
+│ P7       │ [0, 50]   │ [100, 4] │ [0, 22]  │         100 │
+│ Commande │ 400       │ 200      │ 100      │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━┙
+Ce graphe n'est connexe pas car le nombre d'arrête ( 6 ) n'est pas égal au nombre de sommet ( 10 ) - 1 soit ici: 9
+
+Les sous graphes connexes composant la proposition sont :
+
+Le sous graphe numéro 1 est composé des sommets : ['P1', 'C1', 'P2', 'C3', 'P5', 'P3', 'P6']
+Le sous graphe numéro 2 est composé des sommets : ['P4', 'C2', 'P7']
+
+Ajout de la liaison C1 P4 pour rendre notre gaphe connexe
+
+On calcule les matrices de couts potentiels et de couts marginaux
+La matrice coûts potentiel:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │   30 │   26 │   22 │
+│ P2  │   10 │    6 │    2 │
+│ P3  │    9 │    5 │    1 │
+│ P4  │    6 │    2 │   -2 │
+│ P5  │   11 │    7 │    3 │
+│ P6  │    5 │    1 │   -3 │
+│ P7  │    8 │    4 │    0 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+La matrice coûts marginaux:
+┍━━━━━┯━━━━━━┯━━━━━━┯━━━━━━┑
+│     │   C1 │   C2 │   C3 │
+┝━━━━━┿━━━━━━┿━━━━━━┿━━━━━━┥
+│ P1  │    0 │   -6 │   -7 │
+│ P2  │    0 │   44 │    0 │
+│ P3  │    0 │    5 │   29 │
+│ P4  │    0 │    0 │   31 │
+│ P5  │   39 │   33 │    0 │
+│ P6  │    0 │   37 │   30 │
+│ P7  │   42 │    0 │   22 │
+┕━━━━━┷━━━━━━┷━━━━━━┷━━━━━━┙
+L'arrête ['P1', 'C3'] a un coût marginal négatif on l'ajoute donc a notre graphe
+Nous avons l'arrête ['P1', 'C3'] qui a un coût marginal on l'ajoute comme arrête fictive
+Presence d'un cycle
+Le cycle est : ['C3', 'P1', 'C1', 'P2', 'C3']
+Proposition de transport après maximisation de l'arrête
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2       │ C3       │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]  │ [0, 15]  │         100 │
+│ P2       │ [100, 10] │ [0, 50]  │ [0, 2]   │         100 │
+│ P3       │ [100, 9]  │ [0, 10]  │ [0, 30]  │         100 │
+│ P4       │ [0, 6]    │ [100, 2] │ [0, 29]  │         100 │
+│ P5       │ [0, 50]   │ [0, 40]  │ [100, 3] │         100 │
+│ P6       │ [100, 5]  │ [0, 38]  │ [0, 27]  │         100 │
+│ P7       │ [0, 50]   │ [100, 4] │ [0, 22]  │         100 │
+│ Commande │ 400       │ 200      │ 100      │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━┙
+Ce graphe est  connexe car le nombre d'arrête ( 9 ) est égal  au nombre de sommet ( 10 ) - 1 soit ici: 9
+
+Proposotion finale:
+┍━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│          │ C1        │ C2       │ C3       │   Provision │
+┝━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ P1       │ [100, 30] │ [0, 20]  │ [0, 15]  │         100 │
+│ P2       │ [100, 10] │ [0, 50]  │ [0, 2]   │         100 │
+│ P3       │ [100, 9]  │ [0, 10]  │ [0, 30]  │         100 │
+│ P4       │ [0, 6]    │ [100, 2] │ [0, 29]  │         100 │
+│ P5       │ [0, 50]   │ [0, 40]  │ [100, 3] │         100 │
+│ P6       │ [100, 5]  │ [0, 38]  │ [0, 27]  │         100 │
+│ P7       │ [0, 50]   │ [100, 4] │ [0, 22]  │         100 │
+│ Commande │ 400       │ 200      │ 100      │         700 │
+┕━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━┙
