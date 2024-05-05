@@ -16,7 +16,7 @@ def affichage_couts(matrice,nbr_C, nbr_P):
 
     # Ligne des provisions
     ligne = []
-    ligne.append("Provision")
+    ligne.append("Commande")
     for j in range(nbr_C):
         ligne.append(matrice[nbr_P][j])
     data.append(ligne)
@@ -25,7 +25,7 @@ def affichage_couts(matrice,nbr_C, nbr_P):
 
     for i in range(nbr_C):
         headers.append("C" + str(i + 1))
-    headers.append("Commande")
+    headers.append("Provision")
 
     print(tabulate(data, headers=headers, tablefmt="mixed_outline", numalign="right"))
 
@@ -68,7 +68,7 @@ def affichage_proposition_de_transport(matrice,matrice_avec_nbr_de_commande,nbr_
 
     #Ligne des provisions
     ligne = []
-    ligne.append("Provision")
+    ligne.append("Commande")
     for j in range (nbr_C+1):
         ligne.append(matrice_avec_nbr_de_commande[nbr_P][j])
     data.append(ligne)
@@ -77,7 +77,7 @@ def affichage_proposition_de_transport(matrice,matrice_avec_nbr_de_commande,nbr_
 
     for i in range (nbr_C):
         headers.append("C"+str(i+1))
-    headers.append("Commande")
+    headers.append("Provision")
 
     print(tabulate(data,headers=headers,tablefmt="mixed_outline",numalign="right"))
 

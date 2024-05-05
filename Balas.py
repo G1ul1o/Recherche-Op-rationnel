@@ -1,5 +1,4 @@
 from lecture_fichier import lecture_fichier
-from main import *
 from fonction_général import *
 
 # fonction qui calcul la pénalité de chaque ligne et colonne.
@@ -35,6 +34,7 @@ def trouver_penalite_maximale(penalites_lignes, penalites_colonnes):
 
 #fonction qui choisi la case a remplir, c'est a dire celui qui possède le cout le plus petit et qui peut contenir le plus d'objet.
 def choisir_case(matrice, indices_max_ligne, indices_max_colonne, provisions, commandes, ligne_banni, colonne_banni):
+
     candidats = []
     for i in indices_max_ligne:
             if i not in ligne_banni:
@@ -126,7 +126,6 @@ def remplir_matrice_transport(matrice, provisions, commandes):
                     if somme == provisions[i]:
                         for n in range(nbr_C):
                             if matrice_transport[i][n] == -1:
-
                                 matrice_transport[i][n] = 0
                         ligne_banni.append(i)
 
@@ -139,12 +138,14 @@ def remplir_matrice_transport(matrice, provisions, commandes):
                     if somme == commandes[i]:
                         for n in range(nbr_P):
                             if matrice_transport[n][i] == -1:
-
                                 matrice_transport[n][i] = 0
                         colonne_banni.append(i)
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
+
+            print("Les Pénalités des lignes:", penalites_lignes)
+            print("Les Pénalités des colonnes:", penalites_colonnes)
 
 
     return matrice_transport

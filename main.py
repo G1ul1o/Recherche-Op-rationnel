@@ -137,7 +137,8 @@ def methode_marche_avec_potentiels(proposition_de_transport):
             affichage_couts_potentiels_marginaux(matrice_cout_marginaux, nbr_C, nbr_P)
 
             presence_arrete_negative, arrete_a_ajouter = selection_arrete_maximisé(matrice_cout_marginaux, graph)
-
+            if presence_arrete_negative == True:
+                print("Nous avons l'arrête",arrete_a_ajouter, "qui a un coût marginal on l'ajoute comme arrête fictive")
             absence_de_cycle = False
             while absence_de_cycle == False:
 
@@ -162,7 +163,7 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                         sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice, graph)
 
                     if sigma_0 == True :
-                        presence_arrete_negative = False
+                        presence_arrete_negative = False  #si la valeur de delta est égal à 0 alors on ne peut rien faire
 
                     #Test sigma
                     '''if sigma_0 == True:
