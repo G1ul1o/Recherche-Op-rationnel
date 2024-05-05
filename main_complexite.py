@@ -145,6 +145,7 @@ if __name__ == '__main__':
                       "2. Afficher la matrice de transport avec Balas\n"
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
+
                       "Entrez votre choix : "))'''
     valeur_de_n = [10,50,100,400]
     nb_test = 5
@@ -251,6 +252,94 @@ if __name__ == '__main__':
         print("changement de taille")
         tableau_de_valeurs_potentiels_avc_Balas.append(nuage_de_points)
         tableau_de_valeurs_potentiels_et_Balas.append(nuage_de_points_Balas_potentials)
+                      "Entrez votre choix : "))
+    valeur_de_n = [10,20,100,200,400,800]
+
+    if choix== 1:
+            tableau_de_valeurs=[]
+            for taille_matrice in valeur_de_n:
+                nuage_de_points = []
+
+                for i in range (100):
+                    # Creation matrice aléatoire
+
+                    matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+
+                    #time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+                    debut = time.process_time()
+                    matrice_NO = Nord_Ouest(matrice_prix_unitaire_aleatoire, taille_matrice, taille_matrice)
+                    fin = time.process_time()
+
+                    duree = fin - debut
+                    nuage_de_points.append(duree)
+                print(duree)
+                tableau_de_valeurs.append(nuage_de_points)
+
+    elif choix ==2 :
+            tableau_de_valeurs = []
+            for taille_matrice in valeur_de_n:
+                nuage_de_points = []
+                for i in range(100):
+
+                    matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+                    provisions = [int(matrice_prix_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
+                    commandes = [int(matrice_prix_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
+
+                    debut = time.process_time()
+                    matrice_de_transport = remplir_matrice_transport(matrice_prix_unitaire_aleatoire, provisions, commandes)
+                    fin = time.process_time()
+
+                    duree = fin - debut
+                    print(duree)
+                    nuage_de_points.append(duree)
+                print("changement de taille")
+                tableau_de_valeurs.append(nuage_de_points)
+
+    elif choix == 3 :
+            tableau_de_valeurs = []
+            for taille_matrice in valeur_de_n:
+                nuage_de_points = []
+                for i in range(100):
+                    # Creation matrice aléatoire
+                    matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+
+                    # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+                    debut = time.process_time()
+                    matrice_NO = Nord_Ouest(matrice_cout_unitaire_aleatoire, taille_matrice, taille_matrice)
+                    verif_degeneree(matrice_NO,taille_matrice)
+                    methode_marche_avec_potentiels(matrice_NO,matrice_cout_unitaire_aleatoire,taille_matrice)
+                    fin = time.process_time()
+
+                    duree = fin - debut
+                    print(duree)
+
+                    nuage_de_points.append(duree)
+
+                tableau_de_valeurs.append(nuage_de_points)
+
+    elif choix == 4 :
+            tableau_de_valeurs = []
+
+            for taille_matrice in valeur_de_n:
+                nuage_de_points = []
+                for i in range(100):
+                    # Creation matrice aléatoire
+                    matrice_cout_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
+                    provisions = [int(matrice_cout_unitaire_aleatoire[i][-1]) for i in range(taille_matrice)]
+                    commandes = [int(matrice_cout_unitaire_aleatoire[-1][j]) for j in range(taille_matrice)]
+
+                    # time.clock() a été retiré de la bibliothèque Python depuis Python 3.8 on utilise donc time.procces_tim() qui a la même fonction
+                    debut = time.process_time()
+                    proposition_de_transport = remplir_matrice_transport(matrice_cout_unitaire_aleatoire, provisions, commandes)
+                    verif_degeneree(proposition_de_transport)
+                    methode_marche_avec_potentiels(proposition_de_transport, matrice_cout_unitaire_aleatoire, taille_matrice)
+                    fin = time.process_time()
+
+                    duree = fin - debut
+                    print(duree)
+                    input()
+                    nuage_de_points.append(duree)
+                tableau_de_valeurs.a
 
     # Données du tableau
     #categories = ['A', 'B', 'C', 'D']
