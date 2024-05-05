@@ -108,7 +108,12 @@ def calcul_des_couts(matrice,matrice_NO,nbr_C,nbr_P):
             cout_total += matrice_NO[i][j]*matrice[i][j]
     print(f"Ainsi le coût total de cette proposition après la méthode du Nord Ouest est : {cout_total}")    
 
-
+def calcul_des_couts_Balas(matrice,matrice_transport,nbr_C,nbr_P):
+    cout_total=0
+    for i in range(nbr_P):
+        for j in range(nbr_C):
+            cout_total += matrice_NO[i][j]*matrice[i][j]
+    print(f"Ainsi le coût total de cette proposition après la méthode du Balas Hammer est : {cout_total}")    
 
 def methode_marche_avec_potentiels(proposition_de_transport):
     global graph
@@ -216,21 +221,26 @@ if __name__ == '__main__':
         elif choix == 3:
             afficher_matrices()
             Methode_NO()
+            calcul_des_couts(matrice, matrice_NO, nbr_C, nbr_P)
 
             if matrice_NO!=None:
                 verif_degeneree(matrice_NO)
                 methode_marche_avec_potentiels(matrice_NO)
                 print("Proposotion finale:")
                 affichage_proposition_de_transport(matrice, matrice_NO, nbr_C, nbr_P)
+                calcul_des_couts(matrice, matrice_NO, nbr_C, nbr_P)
 
 
         elif choix ==4:
             afficher_matrices()
             Methode_Balas()
+            calcul_des_couts_Balas(matrice, matrice_de_transport, nbr_C, nbr_P)
             verif_degeneree(matrice_de_transport)
             methode_marche_avec_potentiels(matrice_de_transport)
             print("Proposotion finale:")
             affichage_proposition_de_transport(matrice, matrice_de_transport, nbr_C, nbr_P)
+            calcul_des_couts_Balas(matrice, matrice_de_transport, nbr_C, nbr_P)
+
 
         if continuer == True:
             choix = int(input("Que souhaitez-vous faire ?\n"
