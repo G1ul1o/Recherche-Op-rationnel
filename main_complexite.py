@@ -146,8 +146,8 @@ if __name__ == '__main__':
                       "3. Optimisé la méthode de Nord Ouest avec la méthode du marche pieds\n"
                       "4. Optimisé la méthode de Balas avec la méthode du marche pieds\n"
                       "Entrez votre choix : "))'''
-    valeur_de_n = [10,50,100,150,200,400]
-    nb_test = 25
+    valeur_de_n = [10,50,100,400]
+    nb_test = 5
 
     tableau_de_valeurs_NO=[]
     for taille_matrice in valeur_de_n:
@@ -169,10 +169,11 @@ if __name__ == '__main__':
         tableau_de_valeurs_NO.append(nuage_de_points)
         print("changement de taille")
 
-
+    print("Balas")
     tableau_de_valeurs_Balas = []
     for taille_matrice in valeur_de_n:
         nuage_de_points = []
+        print(taille_matrice)
         for i in range(nb_test):
 
             matrice_prix_unitaire_aleatoire = generation_matrice_aleatoire(taille_matrice)
@@ -189,7 +190,7 @@ if __name__ == '__main__':
         print("changement de taille")
         tableau_de_valeurs_Balas.append(nuage_de_points)
 
-
+    print("NO potentiels")
     tableau_de_valeurs_potentiels_avc_NO = []
     tableau_de_valeurs_potentiels_et_NO = []
     for taille_matrice in valeur_de_n:
@@ -220,7 +221,7 @@ if __name__ == '__main__':
         tableau_de_valeurs_potentiels_avc_NO.append(nuage_de_points)
         tableau_de_valeurs_potentiels_et_NO.append(nuage_de_points_NO_potentials)
 
-
+    print("Balas potentiel")
     tableau_de_valeurs_potentiels_avc_Balas = []
     tableau_de_valeurs_potentiels_et_Balas = []
     for taille_matrice in valeur_de_n:

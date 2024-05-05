@@ -139,9 +139,9 @@ def remplir_matrice_transport(matrice, provisions, commandes):
 
             fixe_provisions[meilleur_choix['ligne']] -= meilleur_choix['quantite']
             fixe_commandes[meilleur_choix['colonne']] -= meilleur_choix['quantite']
-            ''' print("Pénalités des lignes:", penalites_lignes)
-            print("Pénalités des colonnes:", penalites_colonnes)
-            print("Proposition de transport après modification (-1 sont des cases non rempli)")'''
+
+            print("Les Pénalités des lignes:", penalites_lignes)
+            print("Les Pénalités des colonnes:", penalites_colonnes)
 
 
     return matrice_transport

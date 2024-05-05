@@ -110,10 +110,10 @@ def selection_arrete_maximisé(matrice_cout_marginaux,graph):
         if "P"+str(indice_arrete_ajouter_ligne+1) not in graph[index_C].liaison:
             graph[index_C].liaison.append("P"+str(indice_arrete_ajouter_ligne+1))
 
-        #print("L'arrête",arrete_a_ajouter,"a un coût marginal négatif on l'ajoute donc a notre graphe")
+        print("L'arrête",arrete_a_ajouter,"a un coût marginal négatif on l'ajoute donc a notre graphe")
 
-    #else:
-        #print("La solution proposé est optimale")
+    else:
+        print("La solution proposé est optimale")
 
     return presence_arrete_negative,arrete_a_ajouter
 

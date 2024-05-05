@@ -132,7 +132,6 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                 absence_de_cycle, cycle = verif_cycle(graph)
                 if absence_de_cycle == False:
                     print("Presence d'un cycle")
-                    print(cycle)
                     sigma_0=Maximisation(graph,cycle, proposition_de_transport, arrete_a_ajouter, nbr_C, nbr_P)
                     print("Proposition de transport après maximisation de l'arrête")
                     affichage_proposition_de_transport(matrice, proposition_de_transport, nbr_C, nbr_P)
@@ -151,7 +150,7 @@ def methode_marche_avec_potentiels(proposition_de_transport):
                         sommet_ajouter_connexe = graphe_connexe(sous_graphes_connexes, matrice, graph)
 
                     if sigma_0 == True :
-                        presence_arrete_negative = False
+                        presence_arrete_negative = False  #si la valeur de delta est égal à 0 alors on ne peut rien faire
 
                     #Test sigma
                     '''if sigma_0 == True:

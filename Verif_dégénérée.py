@@ -21,7 +21,7 @@ def creation_graphe (proposition_de_transport,nbr_C,nbr_P):
         # on crée une table des liaison pour chaque sommet C
         tab_liaison = []
         for j in range(nbr_P):
-
+            #On ajoute les liaisons
             if proposition_de_transport[j][i] > 0:
                 tab_liaison.append("P"+str(j+1))
 
@@ -32,7 +32,7 @@ def creation_graphe (proposition_de_transport,nbr_C,nbr_P):
     return graph
 
 def recherche_indice (graph,sommet_a_trouver):
-
+    #On recherche  l'indice par rapport à son nom
     for i in range(len(graph)):
         if graph[i].nom_sommet == sommet_a_trouver:
             return i
@@ -40,12 +40,13 @@ def verif_cycle (graph):
     sommet_parcouru = []
     verif = True
     cycle = []
-    #recuperation max
     nbr_C=0
     verif=True
+    #On récuoère le nbr de C
     for element in graph:
         if element.nom_sommet[0] == "C":
             nbr_C += 1
+    #On cherche le cycle ici
     for i in range (nbr_C):
         if verif == True:
             index = recherche_indice(graph, "C"+str(i+1))
@@ -172,7 +173,7 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
                 cycle_organise.append(cycle[j])
 
 
-
+    print("Le cycle est :", cycle_organise)
 
     if cycle_organise[0][0] == "C":
         for i in range (len(cycle_organise)):
@@ -196,7 +197,7 @@ def Maximisation (graph,cycle,propositon_de_transport,ligne_ajouter,nbr_C,nbr_P)
 
     for case_cycle in composition_cycle:
 
-        if pair %2 != 0:   #on récupère les impairs
+        if pair %2 != 0:   #on récupère les impairs car c'est que nous poupons comparé car -delta
             if a_compenser == -1:
                 a_compenser = propositon_de_transport[case_cycle[0]][case_cycle[1]]
             else:
@@ -258,12 +259,12 @@ def detection_de_connexe(graph,nbr_sommet):
 
     if nbr_arrete_parcouru != nbr_sommet - 1:
         verif=False
-        #print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
-        #print()
+        print("Ce graphe n'est connexe pas car le nombre d'arrête (",nbr_arrete_parcouru,") n'est pas égal au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print()
     else:
         verif=True
-        #print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
-        #print()
+        print("Ce graphe est  connexe car le nombre d'arrête (",nbr_arrete_parcouru,") est égal  au nombre de sommet (",nbr_sommet,") - 1 soit ici:",nbr_sommet-1)
+        print()
     return verif
 def detection_de_connexe_recursif(graph,sommet,nbr_sommet_parcouru,sommet_parcouru):
     for liaison in sommet.liaison:
@@ -301,13 +302,15 @@ def recherche_des_sous_graphes_connexes(graph,nbr_P):
 
 def recherche_des_sous_graphes_connexes_recursif(sommet,chemin_parcouru,graph):
     chemin_parcouru.append(sommet.nom_sommet)
-
+    #On cherche les sous graphes de manière récursif
     for liaison in sommet.liaison:
         if liaison not in chemin_parcouru:
             index = recherche_indice(graph,liaison)
             recherche_des_sous_graphes_connexes_recursif(graph[index],chemin_parcouru,graph)
 
 def graphe_connexe (sous_graphes_connexes,matrice,graph):
+    #Ici  nous allons récuperer toutes les liaisons possible tout les sommet de provision P du premier graph avec tout les sommets de commandes C du deuxième et à l'inverse ensuite on les compare
+    #Et nous gardons le plus faible
     sommet_ajouter_connexe = []
     indice_ligne_graphe = []
     indice_colonne_graphe_bis=[]
@@ -361,8 +364,8 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
         for i in range(len(graph)):
                 if graph[i].nom_sommet == ("C"+str(indice_colonne_ajouter+1)):
                     graph[i].liaison.append("P"+str(indice_ligne_ajouter+1))
-                    '''print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1),"pour rendre notre gaphe connexe")
-                    print()'''
+                    print("Ajout de la liaison","C"+str(indice_colonne_ajouter+1),"P"+str(indice_ligne_ajouter+1),"pour rendre notre gaphe connexe")
+                    print()
                     sommet_ajouter.append("P"+str(indice_ligne_ajouter+1))
                     sommet_ajouter.append("C"+str(indice_colonne_ajouter+1))
 
@@ -372,6 +375,7 @@ def graphe_connexe (sous_graphes_connexes,matrice,graph):
         sommet_ajouter_connexe.append(sommet_ajouter)
     return sommet_ajouter_connexe
 
+#point d'amélioration non  réussi
 def graphe_connexe_sigma (sous_graphes_connexes,matrice,graph,sous_graphe_deja_ajoute):
     sommet_ajouter_connexe = []
     indice_ligne_graphe = []
@@ -419,9 +423,8 @@ def graphe_connexe_sigma (sous_graphes_connexes,matrice,graph,sous_graphe_deja_a
         for i in range(len(graph)):
             if graph[i].nom_sommet == ("C" + str(indice_colonne_ajouter + 1)):
                 graph[i].liaison.append("P" + str(indice_ligne_ajouter + 1))
-                #print("Ajout de la liaison", "C" + str(indice_colonne_ajouter + 1), "P" + str(indice_ligne_ajouter + 1),
-                      #"pour rendre notre gaphe connexe")
-                #print()
+                print("Ajout de la liaison", "C" + str(indice_colonne_ajouter + 1), "P" + str(indice_ligne_ajouter + 1)) #pour rendre notre gaphe connexe
+                print()
                 sommet_ajouter.append("P" + str(indice_ligne_ajouter + 1))
                 sommet_ajouter.append("C" + str(indice_colonne_ajouter + 1))
 
@@ -430,6 +433,8 @@ def graphe_connexe_sigma (sous_graphes_connexes,matrice,graph,sous_graphe_deja_a
 
         sommet_ajouter_connexe.append(sommet_ajouter)
     return sommet_ajouter_connexe
+
+#Point d'amélioration non réussi
 def sigma_0_connexe (sous_graphes_connexes,graph):
 
 
